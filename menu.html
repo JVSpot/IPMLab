@@ -1,0 +1,97 @@
+<html>
+
+<head>
+	<title>Prototipo IRave</title>
+	<!--<link rel="stylesheet" href="IRave.css">-->
+	<script src="IRaveMenu.2.js"></script>
+    <script src="IRaveContactsList.js"></script>
+	<script src="IRaveNotificationsList.js"></script>
+	<script src="IRaveShowsList.js"></script>
+	<script src="fisical_interface.js"></script>	
+	<link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="IRave.css">
+ 	<link rel="stylesheet" type="text/css" href="deviceBtns.css">
+
+</head>
+
+
+<body>
+	<div id="device">
+		<div id="screen">
+			<div id="LockScreen" style="display: none">
+				<div>
+					<img id="Lock" src="icons\device_lock.png" >
+				</div>
+    			<div class="screenInfo" id="LSHours"></div>
+    			<div class="screenInfo" id="LSDate"></div>
+    			<ul class="screenInfo" id="NotificationsList"></ul>
+    			<div class="screenInfo" id="NotificationsOptions"></div>
+    		</div>
+			<div id="MainMenu" style="display: none">
+				<div id="notificationPop">
+					<div id="notificationNum"></div>
+				</div>
+				<i id="MenuOptionsVals"></i>
+				<div id="iconName"> Map </div>
+			</div>
+			<div id="NotificationsMenu" style="display: none">
+				<h1>Notifications</h1>
+				<ul id="NotificationsList2"></ul>
+				<div id="NotificationOptions"  style="display: none"></div>
+				<div id="Notification_button1" style="visibility: hidden"></div>
+				<div id="Notification_button2" style="visibility: hidden"></div>
+			</div>
+			<div id="ContactsMenu" style="display: none">
+		        <h1 id="ContactsTitle">Contacts</h1>
+				<ul id ="ContactsName"></ul>
+				<div id="AddContact" class="selectable" onclick="openScreen('AddContactMenu')"> Add contact. </div>
+			</div>
+			<div id="AddContactMenu" style="display: none">
+				<div id="AddContactDiv" onclick="alert('Adicionar contacto NFC'); if (confirm('Add Antonio to Friends?')) alert('João added to Friends'); backbutton()"> Touch the friend's iRave. </div>
+			</div>
+			<div id="ContactMenu" style="display: none">
+				<div id="ContactName"></div>
+				<div id="ContactNumber"></div>
+				<div id="ContactButtons">
+					<div id="ShareLocalization" class="selectable" onclick="confirmation('sharelocalization')"> Share location </div>
+					<div id="DeleleContact" class="selectable" onclick="confirmation('delelecontact')"> Delete contact </div>
+					<div id="ConfirmationMsg" style="display: none"> </div>
+				</div>
+			</div>
+			<div id="ScheduleMenu" style="display: none"> 
+				<div id="Schedule">
+					<div id="Days"></div>
+					<div id="Stages"></div>
+					<div id="ShowHours"></div>
+					<div id="Shows"></div>
+				</div>
+			</div>
+		</div>	
+		<div id="buttons_confirm" style="visibility: hidden">
+	  	<div class="selectable" id="Yes_button"> <div type="button"> Yes </div> </div>
+	  	<div class="selectable" id="No_button"> <div type="button" onclick="deny()"> No </div> </div>	
+	  </div>
+		
+		<!-- DEVICE BUTTONS -->
+		<div id="lock_button" class="deviceBtn" >
+			<div class="clickable" id="lock_click" onclick="lockbutton()"></div>
+			<img id="lock_button_info" class="deviceBtnInfo" src="icons\device_lock.png" >
+		</div>
+        <div id="back_button" class="deviceBtn" >
+        	<div class="clickable" id= "back_click" onclick="backbutton()"></div>
+        	<img id="back_button_info" class="deviceBtnInfo" src="icons\device_back.png">
+        </div>
+        
+        <div id="scroll_wheel">
+        	<img id="scroll_wheel_img" src="icons\scroll_wheel.png">
+        	<div class="scroll_sel" id="scroll_up" onclick="alert('up')">
+        		<img class="deviceBtnInfo" id="scroll_up_info" src="icons\up_arrow.png"></div>
+        	<div class="scroll_sel" id="scroll_ok" >
+        		<img class="deviceBtnInfo" id="scroll_ok_info" src="icons\scroll_ok.png"></div>
+        	<div class="scroll_sel" id="scroll_down" onclick="alert('down')">
+        		<img class="deviceBtnInfo" id="scroll_down_info" src="icons\down_arrow.png"></div>
+        </div>
+        <!--                -->
+	</div>
+</body>
+</html>
