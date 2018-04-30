@@ -38,8 +38,11 @@
     margin:5px;
 }
 
+#FriendsGoing{
+    font-size:12px;
+}
+
 #SetGoing{
     font-size: 12px;
-    background-color: var(--neutral-btn-color);
     margin:5px;
 }
