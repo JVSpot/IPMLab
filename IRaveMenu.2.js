@@ -405,7 +405,7 @@
 		document.getElementById("ScheduleStagesTitle").innerHTML = 'Stages';
 		document.getElementById("Days").innerHTML = '';
 		for(var stages of currentSchedule.days[index_schedule].stages){
-			document.getElementById("Stages").innerHTML = '<div id="'+stages.stage+'" onclick="drawSchedule('+stages.stage+')">'+stages.stage+'</div>';	
+			document.getElementById("Stages").innerHTML += '<div id="'+stages.stage+'" onclick="drawSchedule('+stages.stage+')">'+stages.stage+'</div>';	
 		}
 	}
 	//others
