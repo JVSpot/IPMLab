@@ -3,21 +3,20 @@
 <head>
 	<title>Prototipo IRave</title>
 	<!--<link rel="stylesheet" href="IRave.css">-->
-
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<script src="IRaveMenu.2.js"></script>
     <script src="IRaveContactsList.js"></script>
 	<script src="IRaveNotificationsList.js"></script>
 	<script src="IRaveShowsList.js"></script>
-	<script src="fisical_interface.js"></script>	
-	<script src="contact_gen.js"></script>	
+	<script src="fisical_interface.js"></script>
+	<script src="contact_gen.js"></script> 	
 	<link rel="stylesheet" type="text/css" href="reset.css">
-    <link rel="stylesheet" type="text/css" href="IRave.css">
+  <link rel="stylesheet" type="text/css" href="IRave.css">
  	<link rel="stylesheet" type="text/css" href="deviceBtns.css">
- 	<link rel="stylesheet" type="text/css" href="contacts.css">
- 	<link rel="stylesheet" type="text/css" href="schedule.css">
- 	<link rel="stylesheet" type="text/css" href="not_ls.css">
-
+	<link rel="stylesheet" type="text/css" href="contacts.css">
+	<link rel="stylesheet" type="text/css" href="schedule.css">
+	<link rel="stylesheet" type="text/css" href="not_ls.css">
+	 
 </head>
 
 
@@ -72,7 +71,20 @@
 				<h1 id="ScheduleStagesTitle"></h1>
 				<div id="Stages"></div>
 			</div>
-
+			<div id="ScheduleScreen" style="display: none">
+				<h1 id="ScheduleTitle"></h1>
+				<div id="Shows"></div>
+			</div>
+			<div id="ConcertScreen" style="display: none">
+				<div id="ArtistName"></div>
+				<div id="ArtistStage"></div>
+				<div id="ArtistTime"></div>
+				<div id="ConcertButtons">
+					<div id="AddConcertNotification" class="selectable" onclick="information('Notification Added')"> Share location </div>
+					<div id="SetGoing" class="selectable" onclick="information('Ok!')"> Delete contact </div>
+					<div id="ConfirmationMsg" style="display: none"> </div>
+				</div>
+			</div>
 		</div>	
 		<div id="buttons_confirm" style="visibility: hidden">
 	  	<div class="selectable" id="Yes_button"> <div type="button"> Yes </div> </div>
