@@ -472,18 +472,18 @@
 		document.getElementById("FriendsGoing").innerHTML = "" + currentSchedule.days[day].stages[stage].concerts[concert].going.length + " friends going";
 		if (currentSchedule.days[day].stages[stage].concerts[concert].notification) {
 			document.getElementById("AddConcertNotification").innerHTML = "Cancel Notify";
-			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
+			document.getElementById("AddConcertNotification").style.backgroundColor = "#FF0000";
 		} else {
 			document.getElementById("AddConcertNotification").innerHTML = "Notify";
-			document.getElementById("SetGoing").style.backgroundColor = "#ffb200";
+			document.getElementById("AddConcertNotification").style.backgroundColor = "#ffb200";
 		}
 
 		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
 			document.getElementById("SetGoing").innerHTML = "I'm not going!";
-			document.getElementById("SetGoing").style.backgroundColor = "#4488bb";
+			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
 		} else {
 			document.getElementById("SetGoing").innerHTML = "I'm going!";
-			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
+			document.getElementById("SetGoing").style.backgroundColor = "#38a7d3";
 		}
 	}
 
@@ -493,7 +493,8 @@
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
 		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 		currentSchedule.days[day].stages[stage].concerts[concert].notification = !currentSchedule.days[day].stages[stage].concerts[concert].notification;
-		localStorage.setItem("Schedule", JSON.stringify(scheduleData));
+		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
+		ConcertScreen_updateStatus();
 	}
 
 	
@@ -505,14 +506,15 @@
 		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
 			for (var i=currentSchedule.days[day].stages[stage].concerts[concert].going.length-1; i>=0; i--) {
 				if (currentSchedule.days[day].stages[stage].concerts[concert].going[i] === username) {
-						array.splice(i, 1);
-						break;
+					currentSchedule.days[day].stages[stage].concerts[concert].going.splice(i, 1);
+					break;
 				}
 			}
 		} else {
 			currentSchedule.days[day].stages[stage].concerts[concert].going.push(username);
 		}
-		localStorage.setItem("Schedule", JSON.stringify(scheduleData));
+		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
+		ConcertScreen_updateStatus();
 	}
 
 	//others
