@@ -68,13 +68,13 @@
 	font-size: 12;
 	top:25;
 	left:0;
-	cursor:pointer;
 	padding: 5;
 	float: left;
 }
 
 #ContactButtons {
 	padding: 0 5px 4px 1px;
+	cursor:pointer;
 }
 
 #ContactButtons > div{
