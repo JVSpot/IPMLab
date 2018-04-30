@@ -18,7 +18,7 @@ function scroll_up(option_array,array_index){
 	else{
 		next_option = array_index - 1;
 	}
-	document.getElementById("scroll_up").onclick = scroll_up(option_array,next_option);
+	document.getElementById("scroll_up").onclick = function(){scroll_up(option_array,next_option)};
 	option_deselector(option_array[array_index]);
 	option_selector(option_array[ next_option ]);
 }
@@ -31,7 +31,7 @@ function scroll_down(option_array,array_index){
 	else{
 		next_option = array_index + 1;
 	}
-	document.getElementById("scroll_down").onclick = scroll_down(option_array,next_option);
+	document.getElementById("scroll_down").onclick = function(){scroll_up(option_array,next_option)};
 	option_deselector(option_array[array_index]);
 	option_selector(option_array[ next_option ]);
 }
