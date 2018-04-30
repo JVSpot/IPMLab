@@ -1,3 +1,35 @@
+#device {
+	font-family: Oswald, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-size: 20;
+	border-radius: 10%;
+	background-color: black;
+    width: 150px;
+	height: 160px;
+	position:absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	z-index: 9;
+}
+
+
+#screen {
+	overflow: hidden;
+	background-color: #304087;
+	background-size: 100% 100%;
+	text-align:center;
+	z-index: 10;
+    width: 120px;
+	height: 130px;
+	position:absolute;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
+
+
 .deviceBtnInfo{
 	cursor: default;
 	z-index: 10;
