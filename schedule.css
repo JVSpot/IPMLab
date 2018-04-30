@@ -1,0 +1,3 @@
+
+#Days div:nth-child(even) {background:  var(--even-list-color)}
+#Days div:nth-child(odd) {background: var(--odd-list-color)}

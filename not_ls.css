@@ -1,0 +1,61 @@
+#NotificationsList{
+	position: absolute;
+	font-size: 13;
+	right: -1px;
+	left: -1px;
+	padding:15 0 15 0;
+}
+
+#lockscreen{
+	opacity:0.8;
+	padding-top: 5;
+}
+
+.notification{
+	border-top:1px solid white;
+}
+
+#notificationPop{
+	position: absolute;
+	top:-32px;
+	left: -32px;
+	background-color: white;
+	border:5px solid #877830;
+	border-radius: 100%;
+	width: 50px;
+	height: 50px;
+}
+
+#notificationNum{
+	position: absolute;
+	bottom: 8px;
+	right: 7px;
+	color:#304087;
+	font-size: 14;
+	font-weight: bold;
+}
+
+/*notificationscreen*/
+.notificationListed{
+	font-size: 12;
+}
+
+
+#Notificationslist2{
+	position: absolute;
+	right: -16px;
+	overflow-y:scroll;
+	font-size: 12;
+}
+
+#Notificationslist2 li:nth-child(even) {background: var(--even-list-color)}
+#Notificationslist2 li:nth-child(odd) {background: var(--odd-list-color)}
+
+
+#NotificationOptions{
+	font-size: 12;
+}
+
+#notificationsList {
+	overflow: hidden;
+}
