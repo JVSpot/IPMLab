@@ -18,7 +18,7 @@
 			img: "icons/schedule.png",
 			texto: "Schedule",
 			class: "menuIcon",
-			onclick: "openScreen('ScheduleMenu')"
+			onclick: "openScreen('ScheduleMenuDays')"
 		},
 		{
 			id: "Contacts",
@@ -67,8 +67,11 @@
 			//loadContacts(contactsdata);
 			drawContactMenu();
 		};
-		if(screename=="ScheduleMenu"){
-			drawScheduleMenu();
+		if(screename=="ScheduleMenuDays"){
+			drawScheduleMenuDays();
+		}
+		if(screename=="ScheduleMenuStages"){
+			drawScheduleMenuStages();
 		}
 		showScreen(screename);
 
@@ -82,9 +85,9 @@
 		document.getElementById("ContactsMenu").style.display = "none";
 		document.getElementById("ContactMenu").style.display = "none";
 		document.getElementById("AddContactMenu").style.display = "none";
-		document.getElementById("ScheduleMenu").style.display = "none";
+		document.getElementById("ScheduleMenuDays").style.display = "none";
+		document.getElementById("ScheduleMenuStages").style.display = "none";
 		document.getElementById(screename).style.display = "block";
-				console.log(lastscreens);
 	}
 
 
@@ -311,10 +314,10 @@
 		document.getElementById(screen).innerHTML ="";
 		for(var notification of notificationsData.notifications){
 			if (notification.type=="Location-receive"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
 			}
 			if(notification.type=="Location-send"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
 			}
 		}
 	}
@@ -380,29 +383,29 @@
 	//schedulemenu
 
 
-	function drawScheduleMenu(){
+	function drawScheduleMenuDays(){
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		document.getElementById("Days").innerHTML += "<h1>Days</h1>";
-		document.getElementById("ShowHours").innerHTML = "";
-		document.getElementById("Shows").innerHTML = "";
-		document.getElementById("Stages").innerHTML = "";
-
-		console.log(currentSchedule);
-		for(var day of currentSchedule.days){
-			document.getElementById("Days").innerHTML += '<div class="selectable" id="'+day.day+'" onclick="drawScheduleDay('+day.day+')">'+day.day+'</div>';	
+		document.getElementById("Days").innerHTML = "";
+		document.getElementById("ScheduleDaysTitle").innerHTML = 'Days';
+		for(var days of currentSchedule.days){
+			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" onclick="openScheduleStagesscreen('+days.day+')">'+days.day+'</div>';	
 		}
 	}
 
-	function drawScheduleDay(day){
+	function openScheduleStagesscreen(day){
+		localStorage.setItem("Currentday", JSON.stringify(day));		//guarda na localstorage o contacto que se prentende abrir para se poder aceder ao mesmo mais facilmente
+		
+		openScreen("ScheduleMenuStages");
+	}
+
+	function drawScheduleMenuStages(){
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		var index_schedule= day-1;
-		console.log(currentSchedule.days[index_schedule]);
+		var currentday = JSON.parse(localStorage.getItem("Currentday"));
+		var index_schedule= currentday-1;
+		document.getElementById("ScheduleStagesTitle").innerHTML = 'Stages';
+		document.getElementById("Days").innerHTML = '';
 		for(var stages of currentSchedule.days[index_schedule].stages){
-			document.getElementById("Stages").innerHTML += stages.stage;
-			for (let i=0; i<stages.concerts.length; i++){
-				document.getElementById("ShowHours").innerHTML +=stages.concerts[i].time;
-				document.getElementById("Shows").innerHTML +=stages.concerts[i].concert;
-			}
+			document.getElementById("Stages").innerHTML += '<div id="'+stages.stage+'" onclick="drawSchedule('+stages.stage+')">'+stages.stage+'</div>';	
 		}
 	}
 	//others

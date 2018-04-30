@@ -58,14 +58,15 @@
 					<div id="ConfirmationMsg" style="display: none"> </div>
 				</div>
 			</div>
-			<div id="ScheduleMenu" style="display: none"> 
-				<div id="Schedule">
-					<div id="Days"></div>
-					<div id="Stages"></div>
-					<div id="ShowHours"></div>
-					<div id="Shows"></div>
-				</div>
+			<div id="ScheduleMenuDays" style="display: none"> 
+				<h1 id="ScheduleDaysTitle"></h1>
+				<div id="Days"></div>
 			</div>
+			<div id="ScheduleMenuStages" style="display: none">
+				<h1 id="ScheduleStagesTitle"></h1>
+				<div id="Stages"></div>
+			</div>
+
 		</div>	
 		<div id="buttons_confirm" style="visibility: hidden">
 	  	<div class="selectable" id="Yes_button"> <div type="button"> Yes </div> </div>
@@ -86,7 +87,7 @@
         	<img id="scroll_wheel_img" src="icons\scroll_wheel.png">
         	<div class="scroll_sel" id="scroll_up" onclick="alert('up')">
         		<img class="deviceBtnInfo" id="scroll_up_info" src="icons\up_arrow.png"></div>
-        	<div class="scroll_sel" id="scroll_ok" >
+        	<div class="scroll_sel" id="scroll_ok" onclick="alert('ok')">
         		<img class="deviceBtnInfo" id="scroll_ok_info" src="icons\scroll_ok.png"></div>
         	<div class="scroll_sel" id="scroll_down" onclick="alert('down')">
         		<img class="deviceBtnInfo" id="scroll_down_info" src="icons\down_arrow.png"></div>
