@@ -508,7 +508,7 @@
 			//erase:
 			currentSchedule.days[day].stages[stage].concerts[concert].notification = false;
 			for (var i=notificationsData.notifications.length-1; i>=0; i--) {
-				if (notificationsData.notifications[i].type === Concert-notification) {
+				if (notificationsData.notifications[i].type === "Concert-notification") {
 					notificationsData.notifications.splice(i, 1);
 					break;
 				}
