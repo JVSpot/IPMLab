@@ -73,6 +73,9 @@
 		if(screename=="ScheduleMenuStages"){
 			drawScheduleMenuStages();
 		}
+		if(screename=="ScheduleScreen"){
+			drawScheduleScreen();
+		}
 		showScreen(screename);
 
 	}
@@ -87,7 +90,9 @@
 		document.getElementById("AddContactMenu").style.display = "none";
 		document.getElementById("ScheduleMenuDays").style.display = "none";
 		document.getElementById("ScheduleMenuStages").style.display = "none";
+		document.getElementById("ScheduleScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
+		console.log(screename);
 	}
 
 
@@ -314,10 +319,10 @@
 		document.getElementById(screen).innerHTML ="";
 		for(var notification of notificationsData.notifications){
 			if (notification.type=="Location-receive"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
 			}
 			if(notification.type=="Location-send"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
 			}
 		}
 	}
@@ -393,8 +398,7 @@
 	}
 
 	function openScheduleStagesscreen(day){
-		localStorage.setItem("Currentday", JSON.stringify(day));		//guarda na localstorage o contacto que se prentende abrir para se poder aceder ao mesmo mais facilmente
-		
+		localStorage.setItem("Currentday", JSON.stringify(day));
 		openScreen("ScheduleMenuStages");
 	}
 
@@ -403,10 +407,25 @@
 		var currentday = JSON.parse(localStorage.getItem("Currentday"));
 		var index_schedule= currentday-1;
 		document.getElementById("ScheduleStagesTitle").innerHTML = 'Stages';
-		document.getElementById("Days").innerHTML = '';
+		document.getElementById("Stages").innerHTML = '';
 		for(var stages of currentSchedule.days[index_schedule].stages){
-			document.getElementById("Stages").innerHTML = '<div id="'+stages.stage+'" onclick="drawSchedule('+stages.stage+')">'+stages.stage+'</div>';	
+			console.log(stages.stage);	
+			document.getElementById("Stages").innerHTML += '<div id="sta'+stages.stage+'" onclick="openScheduleScreen('+stages.stage+')">'+stages.stage+'</div>';	
 		}
+	}
+
+	function openScheduleScreen(stage){
+		localStorage.setItem("Currentstage", JSON.stringify(stage));	
+		openScreen("ScheduleScreen");
+	}
+
+	function drawScheduleScreen(){
+		console.log("ola");
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var currentday = JSON.parse(localStorage.getItem("Currentday"));
+		var currentstage = JSON.parse(localStorage.getItem("Currentstage"));
+		document.getElementById("ScheduleTitle").innerHTML = currentday+'-'+currentstage;
+		console.log("ola");
 	}
 	//others
 
