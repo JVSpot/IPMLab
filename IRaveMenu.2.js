@@ -329,6 +329,10 @@
 			if(notification.type=="Location-send"){
 				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
 			}
+			if(notification.type=="Concert-notification"){
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">Concert ' + notification.user + ' at ' + notification.time + '.</li>';
+			}
+			
 		}
 	}
 
@@ -348,6 +352,10 @@
 				}
 				if (notification.type=="Location-receive") {
 					document.getElementById("NotificationOptions").innerHTML="Do you want to see "+notification.user+" location?";
+					document.getElementById("Yes_button").onclick=function(){getLocalization(notification.id)};
+				}
+				if (notification.type=="Concert-notification") {
+					document.getElementById("NotificationOptions").innerHTML="Do you want to navigate to "+notification.user+ "?";
 					document.getElementById("Yes_button").onclick=function(){getLocalization(notification.id)};
 				}
 			}
@@ -475,7 +483,7 @@
 			document.getElementById("AddConcertNotification").style.backgroundColor = "#FF0000";
 		} else {
 			document.getElementById("AddConcertNotification").innerHTML = "Notify";
-			document.getElementById("AddConcertNotification").style.backgroundColor = "#ffb200";
+			document.getElementById("AddConcertNotification").style.backgroundColor = "#38a7d3";
 		}
 
 		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
@@ -488,11 +496,35 @@
 	}
 
 	function addConcertNotification() {
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
 		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
-		currentSchedule.days[day].stages[stage].concerts[concert].notification = !currentSchedule.days[day].stages[stage].concerts[concert].notification;
+
+		'Concert-notification'
+
+		if (currentSchedule.days[day].stages[stage].concerts[concert].notification) {
+			//erase:
+			currentSchedule.days[day].stages[stage].concerts[concert].notification = false;
+			for (var i=notificationsData.notifications.length-1; i>=0; i--) {
+				if (notificationsData.notifications[i].type === Concert-notification) {
+					notificationsData.notifications.splice(i, 1);
+					break;
+				}
+			}
+		} else {
+			//create:
+			currentSchedule.days[day].stages[stage].concerts[concert].notification = true;
+			notificationsData.notifications.push({
+				id: Math.random(),
+				type:"Concert-notification",
+				user:currentSchedule.days[day].stages[stage].concerts[concert].artist,
+				time:currentSchedule.days[day].stages[stage].concerts[concert].time
+			});
+		}
+
+		localStorage.setItem("NotificationsData", JSON.stringify(notificationsData));
 		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
 		ConcertScreen_updateStatus();
 	}
