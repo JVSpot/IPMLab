@@ -43,6 +43,7 @@
 
 #Notificationslist2{
 	position: absolute;
+    top: 23px;
 	right: -16px;
 	overflow-y:scroll;
 	font-size: 12;

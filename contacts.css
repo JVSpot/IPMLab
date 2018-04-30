@@ -13,7 +13,7 @@
 	list-style-type: none;
 	position: absolute;
 	font-size: 17;
-	top:20;
+	top:23;
 	left:0px;
 	right:-16px;
 	text-align: left;
@@ -34,7 +34,7 @@
 	font-size: 12px;
 	margin-top: 4px;
 	position: absolute;
-	bottom: 5;
+	bottom: 3;
 	width: 80px;
 	left: 16px;
 	background-color: rgb(56, 167, 211); /* Blue */
