@@ -397,7 +397,7 @@
 		document.getElementById("Days").innerHTML = "";
 		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
 		for(var days of currentSchedule.days){
-			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" onclick="openScheduleStagesscreen(\''+days.day+'\')">'+days.name+'</div>';	
+			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" class="selectable" onclick="openScheduleStagesscreen(\''+days.day+'\')">'+days.name+'</div>';	
 		}
 	}
 
