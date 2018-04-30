@@ -5,3 +5,41 @@
 
 #Stages div:nth-child(even) {background:  var(--even-list-color)}
 #Stages div:nth-child(odd) {background: var(--odd-list-color)}
+
+#Days{
+    position:absolute;
+    top:23px;
+    right:-16;
+    left:0px;
+}
+
+#Stages{
+    position:absolute;
+    top:23px;
+    right:-16;
+    left:0px;
+}
+
+#Shows{
+    position:absolute;
+    top:23px;
+    right:-16;
+    left:0px;
+}
+
+#Scheduletitle{
+    position:relative;
+    top: 4px;
+}
+
+#AddConcertNotification{
+    font-size: 12px;
+    background-color: var(--neutral-btn-color);
+    margin:5px;
+}
+
+#SetGoing{
+    font-size: 12px;
+    background-color: var(--neutral-btn-color);
+    margin:5px;
+}

@@ -416,7 +416,7 @@
 		document.getElementById("Stages").innerHTML = '';
 		for(var stages of currentSchedule.days[index_day].stages){
 			console.log(stages.stage);	
-			document.getElementById("Stages").innerHTML += '<div id="sta'+stages.stage+'" onclick="openScheduleScreen(\''+stages.stage+'\')">'+stages.name+'</div>';	
+			document.getElementById("Stages").innerHTML += '<div class="selectable" id="sta'+stages.stage+'" onclick="openScheduleScreen(\''+stages.stage+'\')">'+stages.name+'</div>';	
 		}
 	}
 
@@ -441,7 +441,7 @@
 		for (i=0; i<currentSchedule.days[index_day].stages[index_stage].concerts.length; i++) {
 			var concert = currentSchedule.days[index_day].stages[index_stage].concerts[i];
 			console.log(concert);	
-			document.getElementById("Shows").innerHTML += '<div class="concert" onclick="openConcertScreen('+index_day+','+index_stage+","+i+')">'+concert.time + "</br>" + concert.artist+'</div>';	
+			document.getElementById("Shows").innerHTML += '<div class="concert selectable" onclick="openConcertScreen('+index_day+','+index_stage+","+i+')">'+concert.time + "</br>" + concert.artist+'</div>';	
 		}
 	}
 
