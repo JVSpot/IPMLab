@@ -1,6 +1,7 @@
 
 	var lastscreens=[];
 	var tid=setInterval(drawDateandHours, 1000);
+	var username = "Eu";
 
 	var menu1 = {
 		title: "Menu Principal",
@@ -452,13 +453,66 @@
 
 	function drawConcertScreen(){
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
-		stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
-		concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 		console.log(day);
 		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert].artist;
 		document.getElementById("ArtistStage").innerHTML = currentSchedule.days[day].stages[stage].name;
 		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert].time;
+		ConcertScreen_updateStatus();
+	}
+
+	function ConcertScreen_updateStatus() {
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+
+		document.getElementById("FriendsGoing").innerHTML = "" + currentSchedule.days[day].stages[stage].concerts[concert].going.length + " friends going";
+		if (currentSchedule.days[day].stages[stage].concerts[concert].notification) {
+			document.getElementById("AddConcertNotification").innerHTML = "Cancel Notify";
+			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
+		} else {
+			document.getElementById("AddConcertNotification").innerHTML = "Notify";
+			document.getElementById("SetGoing").style.backgroundColor = "#ffb200";
+		}
+
+		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
+			document.getElementById("SetGoing").innerHTML = "I'm not going!";
+			document.getElementById("SetGoing").style.backgroundColor = "#4488bb";
+		} else {
+			document.getElementById("SetGoing").innerHTML = "I'm going!";
+			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
+		}
+	}
+
+	function addConcertNotification() {
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		currentSchedule.days[day].stages[stage].concerts[concert].notification = !currentSchedule.days[day].stages[stage].concerts[concert].notification;
+		localStorage.setItem("Schedule", JSON.stringify(scheduleData));
+	}
+
+	
+	function setGoingToConcert() {
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
+			for (var i=currentSchedule.days[day].stages[stage].concerts[concert].going.length-1; i>=0; i--) {
+				if (currentSchedule.days[day].stages[stage].concerts[concert].going[i] === username) {
+						array.splice(i, 1);
+						break;
+				}
+			}
+		} else {
+			currentSchedule.days[day].stages[stage].concerts[concert].going.push(username);
+		}
+		localStorage.setItem("Schedule", JSON.stringify(scheduleData));
 	}
 
 	//others
