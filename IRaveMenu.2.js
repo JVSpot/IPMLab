@@ -347,7 +347,7 @@
 					document.getElementById("Yes_button").onclick=function(){removeNotification(notification.id)};
 				}
 				if (notification.type=="Location-receive") {
-					document.getElementById("NotificationOptions").innerHTML="Do you want to see "+notification.user+" location?";
+					document.getElementById("NotificationOptions").innerHTML="Do you want to see "+notification.user+"'s location?";
 					document.getElementById("Yes_button").onclick=function(){getLocalization(notification.id)};
 				}
 			}
