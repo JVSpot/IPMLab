@@ -73,6 +73,12 @@
 		if(screename=="ScheduleMenuStages"){
 			drawScheduleMenuStages();
 		}
+		if(screename=="ScheduleScreen"){
+			drawScheduleScreen();
+		}
+		if(screename=="ConcertScreen"){
+			drawConcertScreen();
+		}
 		showScreen(screename);
 
 	}
@@ -87,7 +93,10 @@
 		document.getElementById("AddContactMenu").style.display = "none";
 		document.getElementById("ScheduleMenuDays").style.display = "none";
 		document.getElementById("ScheduleMenuStages").style.display = "none";
+		document.getElementById("ScheduleScreen").style.display = "none";
+		document.getElementById("ConcertScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
+		console.log(screename);
 	}
 
 
@@ -314,10 +323,10 @@
 		document.getElementById(screen).innerHTML ="";
 		for(var notification of notificationsData.notifications){
 			if (notification.type=="Location-receive"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
 			}
 			if(notification.type=="Location-send"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
 			}
 		}
 	}
@@ -386,28 +395,72 @@
 	function drawScheduleMenuDays(){
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		document.getElementById("Days").innerHTML = "";
-		document.getElementById("ScheduleDaysTitle").innerHTML = 'Days';
+		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
 		for(var days of currentSchedule.days){
-			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" onclick="openScheduleStagesscreen('+days.day+')">'+days.day+'</div>';	
+			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" onclick="openScheduleStagesscreen(\''+days.day+'\')">'+days.name+'</div>';	
 		}
 	}
 
 	function openScheduleStagesscreen(day){
-		localStorage.setItem("Currentday", JSON.stringify(day));		//guarda na localstorage o contacto que se prentende abrir para se poder aceder ao mesmo mais facilmente
-		
+		localStorage.setItem("Currentday", JSON.stringify(day));
 		openScreen("ScheduleMenuStages");
 	}
 
 	function drawScheduleMenuStages(){
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var currentday = JSON.parse(localStorage.getItem("Currentday"));
-		var index_schedule= currentday-1;
-		document.getElementById("ScheduleStagesTitle").innerHTML = 'Stages';
-		document.getElementById("Days").innerHTML = '';
-		for(var stages of currentSchedule.days[index_schedule].stages){
-			document.getElementById("Stages").innerHTML += '<div id="'+stages.stage+'" onclick="drawSchedule('+stages.stage+')">'+stages.stage+'</div>';	
+		var i=0; 
+		for(i=0; i<currentSchedule.days.length; i++) {if (currentSchedule.days[i].day==currentday) break;}
+		var index_day=i;
+		document.getElementById("ScheduleStagesTitle").innerHTML = currentSchedule.days[index_day].name;
+		document.getElementById("Stages").innerHTML = '';
+		for(var stages of currentSchedule.days[index_day].stages){
+			console.log(stages.stage);	
+			document.getElementById("Stages").innerHTML += '<div id="sta'+stages.stage+'" onclick="openScheduleScreen(\''+stages.stage+'\')">'+stages.name+'</div>';	
 		}
 	}
+
+	function openScheduleScreen(stage){
+		localStorage.setItem("Currentstage", JSON.stringify(stage));	
+		openScreen("ScheduleScreen");
+	}
+
+	function drawScheduleScreen(){
+		console.log("ola");
+		document.getElementById("Shows").innerHTML = "";
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var currentday = JSON.parse(localStorage.getItem("Currentday"));
+		var currentstage = JSON.parse(localStorage.getItem("Currentstage"));
+		var i=0;
+		for(i=0; i<currentSchedule.days.length; i++) if (currentSchedule.days[i].day==currentday) break;
+		var index_day=i;
+		for(i=0; i<currentSchedule.days[index_day].stages.length; i++) if (currentSchedule.days[index_day].stages[i].stage==currentstage) break;
+		var index_stage=i;
+		document.getElementById("ScheduleTitle").innerHTML = currentSchedule.days[index_day].name + '-' +currentSchedule.days[index_day].stages[index_stage].name;
+		console.log("ola");
+		for (i=0; i<currentSchedule.days[index_day].stages[index_stage].concerts.length; i++) {
+			var concert = currentSchedule.days[index_day].stages[index_stage].concerts[i];
+			console.log(concert);	
+			document.getElementById("Shows").innerHTML += '<div class="concert" onclick="openConcertScreen('+index_day+','+index_stage+","+i+')">'+concert.time + "</br>" + concert.artist+'</div>';	
+		}
+	}
+
+	function openConcertScreen(day, stage, concert) {
+		localStorage.setItem("CurrentConcert", JSON.stringify([day, stage, concert]));
+		openScreen("ConcertScreen");
+	}
+
+	function drawConcertScreen(){
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		console.log(day);
+		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert].artist;
+		document.getElementById("ArtistStage").innerHTML = currentSchedule.days[day].stages[stage].name;
+		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert].time;
+	}
+
 	//others
 
 	function information(msg) {
