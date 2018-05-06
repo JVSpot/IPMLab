@@ -6,6 +6,9 @@
 #Stages div:nth-child(even) {background:  var(--even-list-color)}
 #Stages div:nth-child(odd) {background: var(--odd-list-color)}
 
+#Shows div:nth-child(even) {background:  var(--even-list-color)}
+#Shows div:nth-child(odd) {background: var(--odd-list-color)}
+
 #Days{
     text-align:center;
     position:absolute;
@@ -23,14 +26,21 @@
 }
 
 #Shows{
+    background-color: #38568A ;
+    list-style-type: none;
+    font-size: 17;
+    font-size: 80%;
     text-align:center;
     position:absolute;
     top:23px;
     left:-16px;
     right:-16px;
+    height: 110px;
+    overflow-y: auto;
 }
 
 #Scheduletitle{
+    font-size: 80%;
     position:relative;
     top: 4px;
 }
