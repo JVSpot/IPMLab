@@ -10,12 +10,14 @@
 	<script src="IRaveShowsList.js"></script>
 	<script src="fisical_interface.js"></script>
 	<script src="contact_gen.js"></script> 	
+	<script src="dragscroll/dragscroll.js"></script> 
 	<link rel="stylesheet" type="text/css" href="reset.css">
-  <link rel="stylesheet" type="text/css" href="IRave.css">
+    <link rel="stylesheet" type="text/css" href="IRave.css">
  	<link rel="stylesheet" type="text/css" href="deviceBtns.css">
 	<link rel="stylesheet" type="text/css" href="contacts.css">
 	<link rel="stylesheet" type="text/css" href="schedule.css">
 	<link rel="stylesheet" type="text/css" href="notif_ls.css">
+
 	 
 </head>
 
@@ -29,7 +31,7 @@
 				</div>
     			<div class="screenInfo" id="LSHours"></div>
     			<div class="screenInfo" id="LSDate"></div>
-    			<ul class="screenInfo" id="NotificationsList"></ul>
+    			<ul class="screenInfo dragscroll" id="NotificationsList"></ul>
     			<div class="screenInfo" id="NotificationsOptions"></div>
     		</div>
 			<div id="MainMenu" style="display: none">
@@ -41,14 +43,14 @@
 			</div>
 			<div id="NotificationsMenu" style="display: none">
 				<h1>Notifications</h1>
-				<div id="ListWrapper"><ul id="NotificationsList2"></ul></div>
+				<div id="ListWrapper"><ul class="dragscroll" id="NotificationsList2"></ul></div>
 				<div id="NotificationOptions"  style="display: none"></div>
 				<div id="Notification_button1" style="visibility: hidden"></div>
 				<div id="Notification_button2" style="visibility: hidden"></div>
 			</div>
 			<div id="ContactsMenu" style="display: none">
 		        <h1 id="ContactsTitle">Contacts</h1>
-				<ul id ="ContactsName"></ul>
+				<ul class="dragscroll" id ="ContactsName"></ul>
 				<div id="AddContact" class="selectable" onclick="openScreen('AddContactMenu')"> Add contact. </div>
 			</div>
 			<div id="AddContactMenu" style="display: none">
@@ -65,15 +67,15 @@
 			</div>
 			<div id="ScheduleMenuDays" style="display: none"> 
 				<h1 id="ScheduleDaysTitle"></h1>
-				<div id="Days"></div>
+				<div class="dragscroll" id="Days"></div>
 			</div>
 			<div id="ScheduleMenuStages" style="display: none">
 				<h1 id="ScheduleStagesTitle"></h1>
-				<div id="Stages"></div>
+				<div class="dragscroll" id="Stages"></div>
 			</div>
 			<div id="ScheduleScreen" style="display: none">
 				<h1 id="ScheduleTitle"></h1>
-				<div id="Shows"></div>
+				<div class="dragscroll" id="Shows"></div>
 			</div>
 			<div id="ConcertScreen" style="display: none">
 				<div id="ArtistName"></div>
