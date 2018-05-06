@@ -66,3 +66,13 @@
 #notificationsList {
 	overflow: hidden;
 }
+
+#Notification_button1{
+	background-color:var(--neutral-btn-color) ;
+	margin: 5px;
+}
+
+#Notification_button2{
+	margin: 5px;
+	background-color: red;
+}
