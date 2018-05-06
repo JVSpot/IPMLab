@@ -10,12 +10,13 @@
 	<script src="IRaveShowsList.js"></script>
 	<script src="fisical_interface.js"></script>
 	<script src="contact_gen.js"></script> 	
+	<script src="dragscroll/dragscroll.js"></script> 	
 	<link rel="stylesheet" type="text/css" href="reset.css">
  	<link rel="stylesheet" type="text/css" href="IRave.css">
  	<link rel="stylesheet" type="text/css" href="deviceBtns.css">
 	<link rel="stylesheet" type="text/css" href="contacts.css">
 	<link rel="stylesheet" type="text/css" href="schedule.css">
-	<link rel="stylesheet" type="text/css" href="not_ls.css">
+	<link rel="stylesheet" type="text/css" href="notif_ls.css">
 	 
 </head>
 
@@ -29,7 +30,7 @@
 				</div>
     			<div class="screenInfo" id="LSHours"></div>
     			<div class="screenInfo" id="LSDate"></div>
-    			<ul class="screenInfo" id="NotificationsList"></ul>
+    			<ul class="screenInfo dragscroll" id="NotificationsList"></ul>
     			<div class="screenInfo" id="NotificationsOptions"></div>
     		</div>
 			<div id="MainMenu" style="display: none">
@@ -42,7 +43,7 @@
 			<div id="NotificationsMenu" style="display: none">
 				<h1>Notifications</h1>
 				<div id="ListWrapper">
-					<ul id="NotificationsList2"></ul>
+					<ul class="dragscroll" id="NotificationsList2"></ul>
 				</div>
 			</div>
 			<div id="NotificationOptions" style="display: :none">
@@ -52,14 +53,14 @@
 			</div>
 			<div id="ContactsMenu" style="display: none">
 		        <h1 id="ContactsTitle">Contacts</h1>
-				<ul id ="ContactsName"></ul>
+				<ul class="dragscroll" id ="ContactsName"></ul>
 				<div id="AddContact" class="selectable" onclick="openScreen('AddContactMenu')"> Add contact. </div>
 			</div>
 			<div id="AddContactMenu" style="display: none">
 				<div id="AddContactDiv" onclick="alert('Adicionar contacto NFC'); if (confirm('Add Antonio to Friends?')) alert('João added to Friends'); backbutton()"> Touch the friend's iRave. </div>
 			</div>
 			<div id="ContactMenu" style="display: none">
-				<div id="ContactName"></div>
+				<div class="dragscroll" id="ContactName"></div>
 				<div id="ContactNumber"></div>
 				<div id="ContactButtons">
 					<div id="ShareLocalization" class="selectable" onclick="confirmation('sharelocalization')"> Share location </div>
@@ -69,15 +70,15 @@
 			</div>
 			<div id="ScheduleMenuDays" style="display: none"> 
 				<h1 id="ScheduleDaysTitle"></h1>
-				<div id="Days"></div>
+				<div class="dragscroll" id="Days"></div>
 			</div>
 			<div id="ScheduleMenuStages" style="display: none">
 				<h1 id="ScheduleStagesTitle"></h1>
-				<div id="Stages"></div>
+				<div class="dragscroll" id="Stages"></div>
 			</div>
 			<div id="ScheduleScreen" style="display: none">
 				<h1 id="ScheduleTitle"></h1>
-				<div id="Shows"></div>
+				<div class="dragscroll" id="Shows"></div>
 			</div>
 			<div id="ConcertScreen" style="display: none">
 				<div id="ArtistName"></div>

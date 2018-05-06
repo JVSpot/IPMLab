@@ -17,6 +17,7 @@
 }
 
 #notificationPop{
+	cursor:pointer;
 	position: absolute;
 	top:-32px;
 	left: -32px;
@@ -46,6 +47,8 @@
 }
 
 #Notificationslist2{
+	overflow-y: scroll;
+	right:-16px;
 	position: absolute;
     height: 110px !important;
     top: 25px;
