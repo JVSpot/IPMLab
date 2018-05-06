@@ -61,6 +61,9 @@
 		if(screename=="NotificationsMenu"){
 			drawNotificationsList("NotificationsList2");
 		}
+		if(screename=="NotificationOptions"){
+			drawNotificationOptions();
+		}
 		if(screename=="ContactsMenu"){
 	    	drawContactsMenu();
 		};
@@ -80,8 +83,10 @@
 		if(screename=="ConcertScreen"){
 			drawConcertScreen();
 		}
+		if(screename=="ConcertNotificationTime"){
+			drawConcertNotificationTime();
+		}
 		showScreen(screename);
-
 	}
 
 	//abre o ecra em questao e fecha todos os outros
@@ -89,6 +94,7 @@
 		document.getElementById("LockScreen").style.display = "none";
 		document.getElementById("MainMenu").style.display = "none";
 		document.getElementById("NotificationsMenu").style.display = "none";
+		document.getElementById("NotificationOptions").style.display= "none";
 		document.getElementById("ContactsMenu").style.display = "none";
 		document.getElementById("ContactMenu").style.display = "none";
 		document.getElementById("AddContactMenu").style.display = "none";
@@ -96,8 +102,8 @@
 		document.getElementById("ScheduleMenuStages").style.display = "none";
 		document.getElementById("ScheduleScreen").style.display = "none";
 		document.getElementById("ConcertScreen").style.display = "none";
+		document.getElementById("ConcertNotificationTime").style.display = "none";
 		document.getElementById(screename).style.display = "block";
-		console.log(screename);
 	}
 
 
@@ -213,6 +219,9 @@
 				
 			if(notification.type=="Location-send")
 				document.getElementById("NotificationsList").innerHTML += '<li><marquee  class="notification" behavior="scroll" direction="left">You are sharing you location with ' + notification.user + '.</marquee>' +' </li>';  
+			
+			if(notification.type=="Concert-notification")
+				document.getElementById("NotificationsList").innerHTML += '<li><marquee  class="notification" behavior="scroll" direction="left">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</marquee>' +' </li>';  
 		}
 	}
 
@@ -317,75 +326,84 @@
 	//notifications
 
 	function drawNotificationsList(screen){
-		document.getElementById("buttons_confirm").style.visibility = 'hidden';
-		document.getElementById("NotificationOptions").innerHTML="";
-		document.getElementById("NotificationOptions").style.display="none";
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		document.getElementById(screen).innerHTML ="";
 		for(var notification of notificationsData.notifications){
 			if (notification.type=="Location-receive"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="notificationOptions('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="openNotificationScreen('+notification.id+')">' + notification.user + ' is sharing his location with you.</li>';  
 			}
 			if(notification.type=="Location-send"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">You are sharing you location with ' + notification.user +'.</li>';
 			}
 			if(notification.type=="Concert-notification"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="notificationOptions('+notification.id+')">Concert ' + notification.user + ' at ' + notification.time + '.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</li>';
 			}
 			
 		}
 	}
 
-	function notificationOptions(notificationID){
-		document.getElementById("buttons_confirm").style.visibility = 'visible';
-		document.getElementById("NotificationsList2").innerHTML="";
-		document.getElementById("NotificationOptions").style.display="block";
+	function openNotificationScreen(notificationID){
+		localStorage.setItem("Currentnotification", JSON.stringify(notificationID));
+		openScreen("NotificationOptions");
+	}
+
+	function drawNotificationOptions(){
+		document.getElementById("Notification_button1").style.visibility = 'hidden';
+		document.getElementById("Notification_button2").style.visibility = 'hidden';
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
-		localStorage.setItem("currentnotification", JSON.stringify(notification));
-		for(var allnotification of notificationsData.notifications){
-			if(notificationID==allnotification.id){
-				var notification = allnotification;
-				console.log(notification.id);
+		var notificationID=JSON.parse(localStorage.getItem("Currentnotification"));
+		for(var notification of notificationsData.notifications){
+			if(notificationID==notification.id){
 				if (notification.type=="Location-send") {
-					document.getElementById("NotificationOptions").innerHTML="Do you want to stop sending your location to "+notification.user+"?";
-					document.getElementById("Yes_button").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("Notification_button1").style.visibility = 'visible';
+					document.getElementById("NotificationInfo").innerHTML="You are sending your location to "+notification.user+".";
+					document.getElementById("Notification_button1").innerHTML="Stop sending location";
+					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
 				if (notification.type=="Location-receive") {
-					document.getElementById("NotificationOptions").innerHTML="Do you want to see "+notification.user+"'s location?";
-					document.getElementById("Yes_button").onclick=function(){getLocalization(notification.id)};
+					document.getElementById("Notification_button1").style.visibility = 'visible';
+					document.getElementById("Notification_button2").style.visibility = 'visible';
+					document.getElementById("NotificationInfo").innerHTML="Seeing "+notification.user+"'s location";
+					document.getElementById("Notification_button1").innerHTML="See location on map";
+					document.getElementById("Notification_button1").onclick=function(){openMap()};
+					document.getElementById("Notification_button2").innerHTML="Stop receiving location";
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
 				}
 				if (notification.type=="Concert-notification") {
-					document.getElementById("NotificationOptions").innerHTML="Do you want to navigate to "+notification.user+ "?";
-					document.getElementById("Yes_button").onclick=function(){getLocalization(notification.id)};
+					localStorage.setItem("CurrentConcert", JSON.stringify([notification.concertDay, notification.concertStage, notification.concertIndex]));
+					document.getElementById("Notification_button1").style.visibility = 'visible';
+					document.getElementById("Notification_button2").style.visibility = 'visible';
+					document.getElementById("NotificationInfo").innerHTML='<p>'+notification.artist+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Date:'+notification.concertDay+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Stage:'+notification.concertStage+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Time:'+notification.concertTime+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Notify '+notification.notificationTime+' min before</p>';
+					document.getElementById("Notification_button1").innerHTML="Set pre not";
+					document.getElementById("Notification_button1").onclick=function(){openScreen("ConcertNotificationTime");};
+					document.getElementById("Notification_button2").innerHTML="Delete Notification";
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
+
 				}
 			}
 		}
 	}
 
 	function removeNotification(notificationID){
-		console.log("ola");
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		for (let i=0; i < notificationsData.notifications.length ; i ++) {
-			if (notificationsData.notifications[i].id==notificationID)
+			if (notificationsData.notifications[i].id==notificationID){
 				index_notification=i;
+				if(notificationsData.notifications[index_notification].type=="Concert-notification"){
+					var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+					currentSchedule.days[notificationsData.notifications[i].concertDay].stages[notificationsData.notifications[i].concertStage].concerts[notificationsData.notifications[i].concertIndex].notification = false;
+				}
+			}
 		}
 		notificationsData.notifications.splice(index_notification,1);  
 		loadNotifications(notificationsData);
-		document.getElementById("NotificationOptions").innerHTML = "";
-		document.getElementById("buttons_confirm").style.visibility = 'hidden';
-		drawNotificationsList("NotificationsList2");
-		console.log(lastscreens);
-	}
-
-	function getLocalization(notificationID){
-		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
-		for (notification of notificationsData.notifications) {
-			if (notification.id==notificationID)
-				document.getElementById("NotificationOptions").innerHTML='<div id=NotificationOptions"> Localization of '+notification.user+'</div>';
-		}		
-		document.getElementById("NotificationOptions").onclick = function(){drawNotificationsList("NotificationsList2");};
-		document.getElementById("buttons_confirm").style.visibility = 'hidden';
-		console.log(lastscreens);
+		loadSchedule(currentSchedule);
+		backbutton();
 	}
 
 	function verifyNotification(n){
@@ -424,7 +442,6 @@
 		document.getElementById("ScheduleStagesTitle").innerHTML = currentSchedule.days[index_day].name;
 		document.getElementById("Stages").innerHTML = '';
 		for(var stages of currentSchedule.days[index_day].stages){
-			console.log(stages.stage);	
 			document.getElementById("Stages").innerHTML += '<div class="selectable" id="sta'+stages.stage+'" onclick="openScheduleScreen(\''+stages.stage+'\')">'+stages.name+'</div>';	
 		}
 	}
@@ -435,7 +452,6 @@
 	}
 
 	function drawScheduleScreen(){
-		console.log("ola");
 		document.getElementById("Shows").innerHTML = "";
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var currentday = JSON.parse(localStorage.getItem("Currentday"));
@@ -446,16 +462,14 @@
 		for(i=0; i<currentSchedule.days[index_day].stages.length; i++) if (currentSchedule.days[index_day].stages[i].stage==currentstage) break;
 		var index_stage=i;
 		document.getElementById("ScheduleTitle").innerHTML = currentSchedule.days[index_day].name + '-' +currentSchedule.days[index_day].stages[index_stage].name;
-		console.log("ola");
 		for (i=0; i<currentSchedule.days[index_day].stages[index_stage].concerts.length; i++) {
 			var concert = currentSchedule.days[index_day].stages[index_stage].concerts[i];
-			console.log(concert);	
-			document.getElementById("Shows").innerHTML += '<div class="concert selectable" onclick="openConcertScreen('+index_day+','+index_stage+","+i+')">'+concert.time + "</br>" + concert.artist+'</div>';	
+			document.getElementById("Shows").innerHTML += '<div class="concert selectable" onclick="openConcertScreen('+index_day+','+index_stage+','+i+')">'+concert.time + "</br>" + concert.artist+'</div>';	
 		}
 	}
 
-	function openConcertScreen(day, stage, concert) {
-		localStorage.setItem("CurrentConcert", JSON.stringify([day, stage, concert]));
+	function openConcertScreen(day, stage, concert_index) {
+		localStorage.setItem("CurrentConcert", JSON.stringify([day, stage, concert_index]));
 		openScreen("ConcertScreen");
 	}
 
@@ -463,11 +477,10 @@
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
-		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
-		console.log(day);
-		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert].artist;
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert_index].artist;
 		document.getElementById("ArtistStage").innerHTML = currentSchedule.days[day].stages[stage].name;
-		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert].time;
+		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert_index].time;
 		ConcertScreen_updateStatus();
 	}
 
@@ -475,10 +488,10 @@
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
-		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 
-		document.getElementById("FriendsGoing").innerHTML = "" + currentSchedule.days[day].stages[stage].concerts[concert].going.length + " friends going";
-		if (currentSchedule.days[day].stages[stage].concerts[concert].notification) {
+		document.getElementById("FriendsGoing").innerHTML = "" + currentSchedule.days[day].stages[stage].concerts[concert_index].going.length + " friends going";
+		if (currentSchedule.days[day].stages[stage].concerts[concert_index].notification) {
 			document.getElementById("AddConcertNotification").innerHTML = "Cancel Notify";
 			document.getElementById("AddConcertNotification").style.backgroundColor = "#FF0000";
 		} else {
@@ -486,7 +499,7 @@
 			document.getElementById("AddConcertNotification").style.backgroundColor = "#38a7d3";
 		}
 
-		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
+		if (currentSchedule.days[day].stages[stage].concerts[concert_index].going.includes(username)) {
 			document.getElementById("SetGoing").innerHTML = "I'm not going!";
 			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
 		} else {
@@ -495,18 +508,16 @@
 		}
 	}
 
-	function addConcertNotification() {
+	function verifyConcertNotification() {
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
-		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 
-		'Concert-notification'
-
-		if (currentSchedule.days[day].stages[stage].concerts[concert].notification) {
+		if (currentSchedule.days[day].stages[stage].concerts[concert_index].notification) {
 			//erase:
-			currentSchedule.days[day].stages[stage].concerts[concert].notification = false;
+			currentSchedule.days[day].stages[stage].concerts[concert_index].notification = false;
 			for (var i=notificationsData.notifications.length-1; i>=0; i--) {
 				if (notificationsData.notifications[i].type === "Concert-notification") {
 					notificationsData.notifications.splice(i, 1);
@@ -514,19 +525,67 @@
 				}
 			}
 		} else {
-			//create:
-			currentSchedule.days[day].stages[stage].concerts[concert].notification = true;
-			notificationsData.notifications.push({
-				id: Math.random(),
-				type:"Concert-notification",
-				user:currentSchedule.days[day].stages[stage].concerts[concert].artist,
-				time:currentSchedule.days[day].stages[stage].concerts[concert].time
-			});
+			openScreen("ConcertNotificationTime");
 		}
-
-		localStorage.setItem("NotificationsData", JSON.stringify(notificationsData));
+		loadNotifications(notificationsData);
 		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
 		ConcertScreen_updateStatus();
+	}
+	function drawConcertNotificationTime(){
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		document.getElementById("TimesofNotification").innerHTML='';
+		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert_index].artist;
+		document.getElementById("ArtistStage").innerHTML = currentSchedule.days[day].stages[stage].name;
+		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert_index].time;
+		console.log(lastscreens[lastscreens.length-2]);
+		if(lastscreens[lastscreens.length-2]=="ConcertScreen"){
+			for(i=0; i<notificationsData.times.length; i++){
+				document.getElementById("TimesofNotification").innerHTML += '<li class="selectable" id="NotificationTime" onclick="addConcertNotification('+notificationsData.times[i]+')">' +notificationsData.times[i]+'min</li>';  
+			}
+		}
+		if(lastscreens[lastscreens.length-2]=="NotificationOptions"){
+			for(i=0; i<notificationsData.times.length; i++){
+				document.getElementById("TimesofNotification").innerHTML += '<li class="selectable" id="NotificationTime" onclick="redifineTime('+notificationsData.times[i]+')">' +notificationsData.times[i]+'min</li>';  
+			}
+		}
+	}
+
+	function addConcertNotification(notTime){
+		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
+		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		currentSchedule.days[day].stages[stage].concerts[concert_index].notification = true;
+		notificationsData.notifications.push({
+			id: Math.random(),
+			type:"Concert-notification",
+			artist:currentSchedule.days[day].stages[stage].concerts[concert_index].artist,
+			concertTime:currentSchedule.days[day].stages[stage].concerts[concert_index].time,
+			concertDay:day,
+			concertStage:stage,
+			notificationTime:notTime,
+			concertIndex:concert_index
+		});
+		loadNotifications(notificationsData);
+		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
+		backbutton();
+	}
+
+	function redifineTime(time){
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		var notificationID=JSON.parse(localStorage.getItem("Currentnotification"));
+		for(var notification of notificationsData.notifications){
+			if(notificationID==notification.id){
+				notification.notificationTime=time;
+			}
+		}
+		loadNotifications(notificationsData);
+		backbutton();
 	}
 
 	
@@ -534,16 +593,16 @@
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		var day = JSON.parse(localStorage.getItem("CurrentConcert"))[0];
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
-		var concert = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
-		if (currentSchedule.days[day].stages[stage].concerts[concert].going.includes(username)) {
-			for (var i=currentSchedule.days[day].stages[stage].concerts[concert].going.length-1; i>=0; i--) {
-				if (currentSchedule.days[day].stages[stage].concerts[concert].going[i] === username) {
-					currentSchedule.days[day].stages[stage].concerts[concert].going.splice(i, 1);
+		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
+		if (currentSchedule.days[day].stages[stage].concerts[concert_index].going.includes(username)) {
+			for (var i=currentSchedule.days[day].stages[stage].concerts[concert_index].going.length-1; i>=0; i--) {
+				if (currentSchedule.days[day].stages[stage].concerts[concert_index].going[i] === username) {
+					currentSchedule.days[day].stages[stage].concerts[concert_index].going.splice(i, 1);
 					break;
 				}
 			}
 		} else {
-			currentSchedule.days[day].stages[stage].concerts[concert].going.push(username);
+			currentSchedule.days[day].stages[stage].concerts[concert_index].going.push(username);
 		}
 		localStorage.setItem("Schedule", JSON.stringify(currentSchedule));
 		ConcertScreen_updateStatus();

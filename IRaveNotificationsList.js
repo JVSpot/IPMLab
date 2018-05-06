@@ -16,7 +16,8 @@ var notificationsdata = {
 		type:"Location-send",
 		user:"Rui",
 	}
-]
+	],
+	times:[5, 10, 15, 30, 60, 90, 120]
 };
 
 
