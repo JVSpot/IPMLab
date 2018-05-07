@@ -74,9 +74,6 @@
 		if(screename=="ScheduleMenuDays"){
 			drawScheduleMenuDays();
 		}
-		if(screename=="ScheduleMenuStages"){
-			drawScheduleMenuStages();
-		}
 		if(screename=="ScheduleScreen"){
 			drawScheduleScreen();
 		}
@@ -108,7 +105,6 @@
 		document.getElementById("ContactMenu").style.display = "none";
 		document.getElementById("AddContactMenu").style.display = "none";
 		document.getElementById("ScheduleMenuDays").style.display = "none";
-		document.getElementById("ScheduleMenuStages").style.display = "none";
 		document.getElementById("ScheduleScreen").style.display = "none";
 		document.getElementById("ConcertScreen").style.display = "none";
 		document.getElementById("ConcertNotificationTime").style.display = "none";
@@ -435,44 +431,27 @@
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		document.getElementById("Days").innerHTML = "";
 		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
-		for(var days of currentSchedule.days){
-			document.getElementById("Days").innerHTML += '<div id="'+days.day+'" class="selectable" onclick="openScheduleStagesscreen(\''+days.day+'\')">'+days.name+'</div>';	
+		for(i=0; i<currentSchedule.days.length; i++){
+			day=currentSchedule.days[i];
+			document.getElementById("Days").innerHTML += '<div id="'+day.day+'">'+day.name+'</div>';	
+			for(j=0; j<currentSchedule.days[i].stages.length; j++){
+				stage=currentSchedule.days[i].stages[j];
+				document.getElementById(day.day).innerHTML += '<div class="selectable" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
+			}
 		}
 	}
 
-	function openScheduleStagesscreen(day){
-		localStorage.setItem("Currentday", JSON.stringify(day));
-		openScreen("ScheduleMenuStages");
-	}
 
-	function drawScheduleMenuStages(){
-		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		var currentday = JSON.parse(localStorage.getItem("Currentday"));
-		var i=0; 
-		for(i=0; i<currentSchedule.days.length; i++) {if (currentSchedule.days[i].day==currentday) break;}
-		var index_day=i;
-		document.getElementById("ScheduleStagesTitle").innerHTML = currentSchedule.days[index_day].name;
-		document.getElementById("Stages").innerHTML = '';
-		for(var stages of currentSchedule.days[index_day].stages){
-			document.getElementById("Stages").innerHTML += '<div class="selectable" id="sta'+stages.stage+'" onclick="openScheduleScreen(\''+stages.stage+'\')">'+stages.name+'</div>';	
-		}
-	}
-
-	function openScheduleScreen(stage){
-		localStorage.setItem("Currentstage", JSON.stringify(stage));	
+	function openScheduleScreen(index_day, index_stage){
+		localStorage.setItem("Currentstage", JSON.stringify([index_day, index_stage]));	
 		openScreen("ScheduleScreen");
 	}
 
 	function drawScheduleScreen(){
 		document.getElementById("Shows").innerHTML = "";
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		var currentday = JSON.parse(localStorage.getItem("Currentday"));
-		var currentstage = JSON.parse(localStorage.getItem("Currentstage"));
-		var i=0;
-		for(i=0; i<currentSchedule.days.length; i++) if (currentSchedule.days[i].day==currentday) break;
-		var index_day=i;
-		for(i=0; i<currentSchedule.days[index_day].stages.length; i++) if (currentSchedule.days[index_day].stages[i].stage==currentstage) break;
-		var index_stage=i;
+		var index_day = JSON.parse(localStorage.getItem("Currentstage"))[0];
+		var index_stage = JSON.parse(localStorage.getItem("Currentstage"))[1];
 		document.getElementById("ScheduleTitle").innerHTML = currentSchedule.days[index_day].name + '-' +currentSchedule.days[index_day].stages[index_stage].name;
 		for (i=0; i<currentSchedule.days[index_day].stages[index_stage].concerts.length; i++) {
 			var concert = currentSchedule.days[index_day].stages[index_stage].concerts[i];
@@ -659,8 +638,13 @@
 		document.getElementById("FoodsList").innerHTML="";
 		for(i=0; i<foodstands.stands[standindex].order_types[typeindex].orders.length; i++) {
 			order=foodstands.stands[standindex].order_types[typeindex].orders[i];
-			document.getElementById("FoodsList").innerHTML += '<div class="selectable" id="order'+order.name+'" onclick="addorder('+i+')">'+order.name+'</div>';
+			document.getElementById("FoodsList").innerHTML += '<div class="selectable" id="order'+order.name+'" onclick="openFoodInfoScreen('+i+')">'+order.name+'</div>';
 		}
+	}
+
+	function openFoodInfoScreen(orderIndex){
+		localStorage.setItem("CurrentOrder", JSON.stringify(orderIndex));
+		openScreen("CheckOrder");
 	}
 
 
