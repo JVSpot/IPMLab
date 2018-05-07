@@ -33,7 +33,7 @@
 			img: "icons/food.png",
 			texto: "OrderMe",
 			class: "menuIcon",
-			onclick: "information('Em desenvolvimento')"
+			onclick: "openScreen('FoodStandsScreen')"
 		},
 		{
 			id: "Definition",
@@ -86,6 +86,12 @@
 		if(screename=="ConcertNotificationTime"){
 			drawConcertNotificationTime();
 		}
+		if(screename=="FoodStandsScreen"){
+			drawFoodStandsScreen();
+		}
+		if(screename=="OrderTypesScreen"){
+			drawOrderTypeScreen();
+		}
 		showScreen(screename);
 	}
 
@@ -103,6 +109,8 @@
 		document.getElementById("ScheduleScreen").style.display = "none";
 		document.getElementById("ConcertScreen").style.display = "none";
 		document.getElementById("ConcertNotificationTime").style.display = "none";
+		document.getElementById("FoodStandsScreen").style.display = "none";
+		document.getElementById("OrderTypesScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
 
@@ -608,6 +616,27 @@
 		ConcertScreen_updateStatus();
 	}
 
+	function drawFoodStandsScreen(){
+		document.getElementById("StandsList").innerHTML = '';
+		var foodstants = JSON.parse(localStorage.getItem("FoodStands"));
+		for(stand of foodstants.stands){
+			document.getElementById("StandsList").innerHTML += '<div id="stand'+stand.name+'" class="selectable" onclick="openOrderTypeScreen('+stand.name+')">'+stand.name+'</div>';	
+		}
+	}
+
+	function openOrderTypeScreen(standname){
+		localStorage.setItem("Currentstand", JSON.stringify(standname));
+		openScreen("OrderTypesScreen");
+	}
+
+	function drawOrderTypeScreen(){
+		var foodstants = JSON.parse(localStorage.getItem("FoodStands"));
+		var stand = JSON.parse(localStorage.getItem("Currentstand"));
+		for(i=0; i<foodstants.stands.length; i++) 
+			{if (currentSchedule.days[i].day==currentday) break;}
+		var index_day=i;
+	}
+
 	//others
 
 	function information(msg) {
@@ -624,10 +653,16 @@
 	function loadSchedule(scheduleData){
 		localStorage.setItem("Schedule", JSON.stringify(scheduleData));
 	}
+
+	function loadFoodStands(foodstandsData){
+		localStorage.setItem("FoodStands", JSON.stringify(foodstandsData));
+	}
+
 	window.addEventListener('DOMContentLoaded', function() {
 		loadContacts(contactsdata);
 		loadNotifications(notificationsdata);
 		loadSchedule(scheduledata);
+		loadFoodStands(foodstandsData);
 		drawNotificationsList("NotificationsList2");
 		openScreen("LockScreen");
 	})
