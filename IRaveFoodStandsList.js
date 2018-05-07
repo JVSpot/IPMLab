@@ -27,6 +27,7 @@ var foodstandsData = {
 					{name:'Coffee', price:'0.80'}
 			]
 		}
+
 		]
 	},
 	{	
