@@ -54,7 +54,7 @@
 #Notificationslist2{
 	overflow-y: auto;
 	position: absolute;
-  height: 110px !important;
+  height: 105px !important;
   top: 25px;
 	font-size: 12px;
 }

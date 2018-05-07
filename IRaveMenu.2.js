@@ -529,13 +529,10 @@
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
 		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 		document.getElementById("TimesofNotification").innerHTML='';
-		document.getElementById("ArtistName").innerHTML = currentSchedule.days[day].stages[stage].concerts[concert_index].artist;
-		document.getElementById("ArtistStage").innerHTML = currentSchedule.days[day].stages[stage].name;
-		document.getElementById("ArtistTime").innerHTML =  currentSchedule.days[day].stages[stage].concerts[concert_index].time;
 		console.log(lastscreens[lastscreens.length-2]);
 		if(lastscreens[lastscreens.length-2]=="ConcertScreen"){
 			for(i=0; i<notificationsData.times.length; i++){
-				document.getElementById("TimesofNotification").innerHTML += '<li class="selectable" id="NotificationTime" onclick="addConcertNotification('+notificationsData.times[i]+')">' +notificationsData.times[i]+'min</li>';  
+				document.getElementById("TimesofNotification").innerHTML += '<li class="selectable button" id="NotificationTime" onclick="addConcertNotification('+notificationsData.times[i]+')">' +notificationsData.times[i]+'min</li>';  
 			}
 		}
 		if(lastscreens[lastscreens.length-2]=="NotificationOptions"){

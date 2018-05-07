@@ -17,7 +17,7 @@ var notificationsdata = {
 		user:"Rui",
 	}
 	],
-	times:[5, 10, 15, 30, 60, 90, 120]
+	times:[5, 15, 30, 60]
 };
 
 
