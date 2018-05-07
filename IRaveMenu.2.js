@@ -640,7 +640,7 @@
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		document.getElementById("OrderTypesList").innerHTML="";
-		document.getElementById("FoodStandsHead").innerHTML=foodstands.stands[standindex];
+		document.getElementById("StandName").innerHTML=foodstands.stands[standindex].name;
 		for(i=0; i< foodstands.stands[standindex].order_types.length; i++){
 			type=foodstands.stands[standindex].order_types[i];
 			document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="type'+type.name+'" onclick="openFoodScreen('+i+')">'+type.name+'</div>';	
@@ -658,8 +658,8 @@
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
 		document.getElementById("FoodsList").innerHTML="";
 		for(i=0; i<foodstands.stands[standindex].order_types[typeindex].orders.length; i++) {
-			order==foodstands.stands[standindex].order_types[typeindex].orders[i];
-			document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="order'+order.name+'" onclick="addorder('+i+')">'+order.name+'</div>';
+			order=foodstands.stands[standindex].order_types[typeindex].orders[i];
+			document.getElementById("FoodsList").innerHTML += '<div class="selectable" id="order'+order.name+'" onclick="addorder('+i+')">'+order.name+'</div>';
 		}
 	}
 
