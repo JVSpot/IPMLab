@@ -60,3 +60,13 @@
     font-size: 12px;
     margin:5px;
 }
+
+#ConcertNotificationTime h1 {
+    font-size: 12px
+}
+
+.button {
+    font-size: 12px;
+    margin:5px;
+    background-color: var(--neutral-btn-color);
+}
