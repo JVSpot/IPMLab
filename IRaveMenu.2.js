@@ -92,6 +92,9 @@
 		if(screename=="FoodScreen"){
 			drawFoodScreen();
 		}
+		if(screename=="CheckOrderScreen"){
+			drawCheckOrderScreen();
+		}
 		showScreen(screename);
 	}
 
@@ -111,6 +114,7 @@
 		document.getElementById("FoodStandsScreen").style.display = "none";
 		document.getElementById("OrderTypesScreen").style.display = "none";
 		document.getElementById("FoodScreen").style.display = "none";
+		document.getElementById("CheckOrderScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
 
@@ -386,7 +390,7 @@
 					document.getElementById("NotificationInfo").innerHTML+='<p>Stage:'+notification.concertStage+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p>Time:'+notification.concertTime+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p>Notify '+notification.notificationTime+' min before</p>';
-					document.getElementById("Notification_button1").innerHTML="Set pre not";
+					document.getElementById("Notification_button1").innerHTML="Set Timer";
 					document.getElementById("Notification_button1").onclick=function(){openScreen("ConcertNotificationTime");};
 					document.getElementById("Notification_button2").innerHTML="Delete Notification";
 					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
@@ -641,7 +645,18 @@
 
 	function openFoodInfoScreen(orderIndex){
 		localStorage.setItem("CurrentOrder", JSON.stringify(orderIndex));
-		openScreen("CheckOrder");
+		openScreen("CheckOrderScreen");
+	}
+
+	function drawCheckOrderScreen(){
+		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
+		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
+		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
+		var orderindex = JSON.parse(localStorage.getItem("CurrentOrder"));
+		order = foodstands.stands[standindex].order_types[typeindex].orders[orderindex];
+		document.getElementById("FoodInfo").innerHTML = '<p>'+order.name+'</p>';
+		document.getElementById("FoodInfo").innerHTML += '<p>'+(order.description||"")+'</p>';
+		document.getElementById("FoodInfo").innerHTML += '<p>Price:'+order.price+'</p>';
 	}
 
 
