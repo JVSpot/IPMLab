@@ -4,7 +4,7 @@
 	right: -1px;
 	left: -1px;
 	padding:15 0 15 0;
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 
 #lockscreen{
@@ -43,7 +43,7 @@
 }
 
 #ListWrapper{
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 
 #NotificationsMenu h1 {
@@ -52,7 +52,7 @@
 }
 
 #Notificationslist2{
-	overflow-y: scroll;
+	overflow-y: auto;
 	position: absolute;
   height: 110px !important;
   top: 25px;
