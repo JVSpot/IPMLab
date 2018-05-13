@@ -355,6 +355,9 @@
 			if(notification.type=="Concert-notification"){
 				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</li>';
 			}
+			if(notification.type=="FoodOrder-notification"){
+				document.getElementById(screen).innerHTML +=  '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">FoodOrder.</li>';
+			}
 			
 		}
 	}
@@ -400,6 +403,13 @@
 					document.getElementById("Notification_button2").innerHTML="Delete Notification";
 					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
 
+				}
+				if(notification.type=="FoodOrder-notification"){
+					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
+					for(item of notification.order){
+						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+'->'+item.name+' price='+item.price+'€'+'</p>';
+					}
+					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
 				}
 			}
 		}
@@ -680,15 +690,32 @@
 		backbutton();
 	}
 
+	/*function removeItem(){
+
+	}*/
 	function drawConcludeOrderScreen(){
 		document.getElementById("ItemsList").innerHTML='';
+		/*document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';*/
 		var total_price=0;
 		for(item of currentOrder){
 			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
+			/*document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;*/
 			total_price+=item.price;
 		}
-		console.log(total_price);
 		document.getElementById("totalPrice").innerHTML=total_price;
+	}
+
+	function checkOrder(){
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		notificationsData.notifications.push({
+			id: Math.random(),
+			type:"FoodOrder-notification",
+			order:currentOrder,
+			orderTime:getTime()
+		});
+		currentOrder=[];
+		loadNotifications(notificationsData);
+		backbutton();
 	}
 	//others
 
