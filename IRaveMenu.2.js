@@ -406,10 +406,14 @@
 				}
 				if(notification.type=="FoodOrder-notification"){
 					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
+					var total_time=0;
 					for(item of notification.order){
 						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+'->'+item.name+' price='+item.price+'€'+'</p>';
+						total_time+=item.time;
 					}
+					console.log(total_time);
 					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Expected time:'+total_time+'€</p>';
 				}
 			}
 		}
@@ -672,7 +676,8 @@
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
 		document.getElementById("ItemInfo").innerHTML = '<p>'+item.name+'</p>';
 		document.getElementById("ItemInfo").innerHTML += '<p>'+(item.description||"")+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>Price:'+item.price+'</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>Price:'+item.price+' €</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>Expected time:'+item.time+' min</p>';
 	}
 
 	function checkItem(){
@@ -684,7 +689,8 @@
 		currentOrder.push({
 			stand:foodstands.stands[standindex].name,
 			name:item.name,
-			price:item.price
+			price:item.price,
+			time:item.time
 		});
 		console.log(currentOrder);
 		backbutton();
@@ -697,12 +703,15 @@
 		document.getElementById("ItemsList").innerHTML='';
 		/*document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';*/
 		var total_price=0;
+		var total_time=0;
 		for(item of currentOrder){
 			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
 			/*document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;*/
 			total_price+=item.price;
+			total_time+=item.time;
 		}
-		document.getElementById("totalPrice").innerHTML=total_price;
+		document.getElementById("totalPrice").innerHTML=total_price+' €';
+		document.getElementById("totalTime").innerHTML=totalTime+' min';
 	}
 
 	function checkOrder(){
