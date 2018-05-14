@@ -404,7 +404,7 @@
 					document.getElementById("Notification_button2").style.visibility = 'visible';
 					document.getElementById("NotificationInfo").innerHTML="Seeing "+notification.user+"'s location";
 					document.getElementById("Notification_button1").innerHTML="See location on map";
-					document.getElementById("Notification_button1").onclick=function(){openMap()};
+					document.getElementById("Notification_button1").onclick=function(){openScreen('MapMockView')};
 					document.getElementById("Notification_button2").innerHTML="Stop receiving location";
 					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
 				}
@@ -736,6 +736,7 @@
 		document.getElementById("totalPrice").innerHTML='Total €: '+total_price+' €';
 		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png">'+total_time+' min';
 	}
+	
 
 	function checkOrder(){
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
