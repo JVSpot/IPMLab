@@ -1,7 +1,10 @@
 
 .foodIcon{
     width:20px;
-		height:20px;
+    height:20px;
+    position:relative;
+    float:right;
+    right: 5px;
 }
 
 
