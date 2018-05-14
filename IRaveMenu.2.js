@@ -428,15 +428,16 @@
 					var total_time=0;
 					var total_price=0;
 					for(item of notification.order){
-						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+':'+item.name+' price='+item.price+'€'+'</p>';
+						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+':'+item.name+' '+item.price+'€'+'</p>';
 						total_time+=item.time;
 						total_price+=item.price;
 					}
 					console.log(total_time);
-					document.getElementById("NotificationInfo").innerHTML+='<p>Hour of the order:'+notification.orderTime+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Time of order:'+notification.orderTime+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p><img id="clock" src="icons/clock.png">'+total_time+' min</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p>Total €: '+total_price+' €</p>';
-					document.getElementById("Notification_button1").innerHTML="Received! Stop sharing my location!";
+					document.getElementById("Notification_button1").style.visibility = 'visible';
+					document.getElementById("Notification_button1").innerHTML="Received! Delete notification";
 					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
 			}
