@@ -679,6 +679,7 @@
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
+		document.getElementById("Stand&Type").innerHTML = foodstands.stands[standindex].name +'<img id="typeIcon" class="foodIcon" src="icons/'+foodstands.stands[standindex].item_types[typeindex].name+'-icon.png">';
 		document.getElementById("FoodsList").innerHTML="";
 		for(i=0; i<foodstands.stands[standindex].item_types[typeindex].items.length; i++) {
 			item=foodstands.stands[standindex].item_types[typeindex].items[i];
