@@ -665,7 +665,7 @@
 		document.getElementById("StandName").innerHTML=foodstands.stands[standindex].name;
 		for(i=0; i< foodstands.stands[standindex].item_types.length; i++){
 			type=foodstands.stands[standindex].item_types[i];
-				document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="type'+type.name+'" onclick="openItemsScreen('+i+')">'+type.name+'<img id="typeIcon" src="icons/'+type.name+'-icon.png"></div>';	
+				document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="type'+type.name+'" onclick="openItemsScreen('+i+')">'+type.name+'<img id="typeIcon" class="foodIcon" src="icons/'+type.name+'-icon.png"></div>';	
 		}
 	}
 
