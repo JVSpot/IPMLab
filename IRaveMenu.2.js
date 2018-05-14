@@ -93,8 +93,8 @@
 		if(screename=="ItemsScreen"){
 			drawItemsScreen();
 		}
-		if(screename=="CheckItemScreen"){
-			drawCheckItemScreen();
+		if(screename=="AddItemScreen"){
+			drawAddItemScreen();
 		}
 		if(screename=="ConcludeOrderScreen"){
 			drawConcludeOrderScreen();
@@ -118,7 +118,7 @@
 		document.getElementById("FoodStandsScreen").style.display = "none";
 		document.getElementById("OrderTypesScreen").style.display = "none";
 		document.getElementById("ItemsScreen").style.display = "none";
-		document.getElementById("CheckItemScreen").style.display = "none";
+		document.getElementById("AddItemScreen").style.display = "none";
 		document.getElementById("ConcludeOrderScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
@@ -410,13 +410,16 @@
 				if(notification.type=="FoodOrder-notification"){
 					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
 					var total_time=0;
+					var total_price=0;
 					for(item of notification.order){
-						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+'->'+item.name+' price='+item.price+'€'+'</p>';
+						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+':'+item.name+' price='+item.price+'€'+'</p>';
 						total_time+=item.time;
+						total_price+=item.price;
 					}
 					console.log(total_time);
-					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
-					document.getElementById("NotificationInfo").innerHTML+='<p>Expected time:'+total_time+'€</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Hour of the order:'+notification.orderTime+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p><img id="clock" src="icons/clock.png">'+total_time+' min</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Total €: '+total_price+' €</p>';
 					document.getElementById("Notification_button1").innerHTML="Received! Stop sharing my location!";
 					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
@@ -461,7 +464,7 @@
 		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
 		for(i=0; i<currentSchedule.days.length; i++){
 			day=currentSchedule.days[i];
-			document.getElementById("Days").innerHTML += '<div id="'+day.day+'">'+day.name+'</div>';	
+			document.getElementById("Days").innerHTML += '<div id="'+day.day+'" class="Lists2">'+day.name+'</div>';	
 			for(j=0; j<currentSchedule.days[i].stages.length; j++){
 				stage=currentSchedule.days[i].stages[j];
 				document.getElementById(day.day).innerHTML += '<div class="selectable stage" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
@@ -669,10 +672,10 @@
 
 	function openFoodInfoScreen(itemIndex){
 		localStorage.setItem("CurrentItem", JSON.stringify(itemIndex));
-		openScreen("CheckItemScreen");
+		openScreen("AddItemScreen");
 	}
 
-	function drawCheckItemScreen(){
+	function drawAddItemScreen(){
 		document.getElementById("numItems4").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
@@ -681,11 +684,11 @@
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
 		document.getElementById("ItemInfo").innerHTML = '<p>'+item.name+'</p>';
 		document.getElementById("ItemInfo").innerHTML += '<p>'+(item.description||"")+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>Price:'+item.price+' €</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>Expected time:'+item.time+' min</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>€:'+item.price+'</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p><img id="clock" src="icons/clock.png">:'+item.time+' min</p>';
 	}
 
-	function checkItem(){
+	function addItem(){
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));								
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
@@ -706,17 +709,16 @@
 	}*/
 	function drawConcludeOrderScreen(){
 		document.getElementById("ItemsList").innerHTML='';
-		/*document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';*/
+		document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location';
 		var total_price=0;
 		var total_time=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
-			/*document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;*/
+			document.getElementById("ItemsList").innerHTML+='<li><p>'+item.stand+':'+item.name+'</p><p>'+item.price+'€</p></li>';
 			total_price+=item.price;
 			total_time+=item.time;
 		}
-		document.getElementById("totalPrice").innerHTML=total_price+' €';
-		document.getElementById("totalTime").innerHTML=totalTime+' min';
+		document.getElementById("totalPrice").innerHTML='Total €: '+total_price+' €';
+		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png">'+total_time+' min';
 	}
 
 	function checkOrder(){

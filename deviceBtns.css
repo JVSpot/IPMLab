@@ -57,7 +57,7 @@
 
 #lock_button_info{
 	position: absolute;
-	bottom: 0px;
+	bottom: -2px;
 	left:4px;
 }
 
@@ -78,7 +78,7 @@
 #back_button_info{
 	position: absolute;
 	top:4px;
-	right: 0px;
+	right: -1px;
 }
 
 #back_click{

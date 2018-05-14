@@ -1,12 +1,17 @@
 :root{
 	--even-list-color: rgb(56, 105, 138);
 	--odd-list-color: rgb(56, 85, 138);
+	--even-list-color2: rgb(73, 87, 153);
+	--odd-list-color2: rgb(112, 124, 181);
   --neutral-btn-color: rgb(56, 167, 211);
 }
 
 
 .Lists div:nth-child(odd) {background: var(--odd-list-color)}
 .Lists div:nth-child(even) {background:  var(--even-list-color)}
+
+.Lists2 div:nth-child(odd) {background: var(--odd-list-color2)}
+.Lists2 div:nth-child(even) {background:  var(--even-list-color2)}
 
 
 body {
@@ -64,11 +69,6 @@ body {
 	padding:15 0 15 0;
 }
 
-#lockscreen{
-	opacity:0.8;
-	padding-top: 5;
-}
-
 /*mainmenu*/
 #menu {
 	opacity:0.8;
@@ -116,7 +116,13 @@ body {
 }
 
 .screenInfo{
-	font-size: 15px;
+
+	font-size: 13px;
+}
+
+#LSHours{
+	margin-top: 7px;
+	font-size: 20px;
 }
 
 #buttons_confirm {

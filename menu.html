@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div id="NotificationOptions" style="display: :none">
-				<div id="NotificationInfo"></div>
+				<div id="NotificationInfo" class="dragscroll"></div>
 				<div id="Notification_button1" class="selectable" style="visibility: hidden"></div>
 				<div id="Notification_button2" class="selectable" style="visibility: hidden"></div>
 			</div>
@@ -76,12 +76,12 @@
 			</div>
 			<div id="ScheduleMenuDays" style="display: none"> 
 				<h1 id="ScheduleDaysTitle"></h1>
-				<div class="dragscroll" id="Days">
+				<div class="dragscroll Lists" id="Days">
 				</div>
 			</div>
 			<div id="ScheduleScreen" style="display: none">
 				<h1 id="ScheduleTitle"></h1>
-				<div class="dragscroll" id="Shows"></div>
+				<div class="dragscroll Lists" id="Shows"></div>
 			</div>
 			<div id="ConcertScreen" style="display: none">
 				<div id="ArtistName"></div>
@@ -119,22 +119,21 @@
 				</div>
 				<ul class="dragscroll Lists" id="FoodsList"></ul>
 			</div>
-			<div id="CheckItemScreen" style="display: none">
+			<div id="AddItemScreen" style="display: none">
 				<div id="orderPop4" class="orderPop selectable" onclick="openScreen('ConcludeOrderScreen')">
 					<div id="numItems4"></div>
 				</div>
 				<ul class="dragscroll" id="ItemInfo"></ul>
-				<div class="selectable" id="checkItemButton" onclick="checkItem()">Check item</div>
-				<div class="selectable" id="itemsBackButton"onclick="backbutton()">Back</div>
+				<div><img src="icons\add_icon.png" class="selectable" id="addItemButton" onclick="addItem()"></div>
 			</div>
-			<div id="ConcludeOrderScreen" style="display: none">
+			<div id="ConcludeOrderScreen" class="dragscroll" style="display: none">
 				<div id="ConcludeOrderTitle">Check your order</div>
-				<div class="selectable" id="checkOrderButton" onclick="checkOrder()">Check order</div>
+				<div><img src="icons\check-mark.png" class="selectable" id="checkOrderButton" onclick="checkOrder()"></div>
 				<div id="ConcludeOrderMensage"></div>
-				<ul class="dragscroll" id="ItemsList"></ul>
+				<ul class="dragscroll Lists" id="ItemsList"></ul>
 				<div id="totalPrice"></div>
-				<div id="totalTime"></div>			
-				<div class="selectable" id="ordeBackButton"onclick="backbutton()">Back</div>
+				<div id="totalTime"></div>		
+				<div><img src="icons\check-mark.png" class="selectable" id="checkOrderButton" onclick="checkOrder()"></div>	
 			</div>
 		</div>	
 		<div id="buttons_confirm" style="visibility: hidden">
