@@ -47,15 +47,15 @@
 }
 
 #NotificationsMenu h1 {
-	padding-top: 4;	
+	padding-top: 4;
 	font-size: 16px;
 }
 
 #Notificationslist2{
 	overflow-y: auto;
 	position: absolute;
-  height: 105px !important;
-  top: 25px;
+    height: 105px !important;
+    top: 25px;
 	font-size: 12px;
 }
 
@@ -64,6 +64,7 @@
 
 
 #NotificationOptions{
+    height:110px;
 	font-size: 12;
 }
 
@@ -81,5 +82,7 @@
 	background-color: red;
 }
 #Notificationinfo{
-	overflow-y: scroll;
+    max-height:90px;
+	overflow-y: auto;
+    overflow-x:hidden;
 }
