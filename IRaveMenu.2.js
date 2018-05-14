@@ -250,8 +250,9 @@
 		//document.getElementById("MenuOptionsHeader").innerHTML = ""
 		document.getElementById("MenuOptionsVals").innerHTML = "";
 		for(var option of menu.opcoes) {
-			document.getElementById("MenuOptionsVals").innerHTML += '<i > <img  class="' + option.class + ' selectable" id="' + option.id + '" src="' + option.img + '" onclick="'+ option.onclick +'" onmouseover="setMainMenuText(\''+ option.texto+'\')"></i>'; 
+			document.getElementById("MenuOptionsVals").innerHTML += '<i > <img  class="' + option.class + ' selectable" id="' + option.id + '" src="' + option.img + '" onclick="'+ option.onclick +'""></i>'; 
 		}
+		
 	}
 
 	function setMainMenuText(s)
@@ -463,7 +464,7 @@
 			document.getElementById("Days").innerHTML += '<div id="'+day.day+'">'+day.name+'</div>';	
 			for(j=0; j<currentSchedule.days[i].stages.length; j++){
 				stage=currentSchedule.days[i].stages[j];
-				document.getElementById(day.day).innerHTML += '<div class="selectable" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
+				document.getElementById(day.day).innerHTML += '<div class="selectable stage" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
 			}
 		}
 	}

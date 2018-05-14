@@ -1,0 +1,39 @@
+
+
+.orderPop{
+	border-radius: 100%;
+	background-color: green;
+	padding-top: 100%;
+	position: absolute;
+	top: -100px;
+}
+
+#FoodList{
+	overflow-y: scroll;
+}
+
+#FoodStandsHead{
+	font-size: 16px;
+	padding: 3px;
+}
+
+.orderBackButton{
+	position: relative;
+	top:0;
+	right:0;
+	padding: 1px;
+	cursor:pointer;
+	width: 23%;
+	border-radius: 100%;
+}
+
+.checkOrderButton{
+	position: relative;
+	top:0;
+	right:0;
+	padding: 1px;
+	cursor:pointer;
+	width: 23%;
+	border-radius: 100%;
+}
+
