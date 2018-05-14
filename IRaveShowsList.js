@@ -8,7 +8,7 @@ var scheduledata = {
 		{
 			name:'Stage A',
 			stage:'A',
-			concerts:[{time:"18:30", artist:"Band1", going: ["a", "b"], notification: false}, {time:"20:30", artist:"Band2", going: [], notification: false}, {time:"22:30", artist:"Band3", going: [], notification: false}, {time:"00:30", artist:"Band4", going: [], notification: false}]
+			concerts:[{time:"18:30", artist:"My Chemical Romance", going: ["a", "b"], notification: false}, {time:"20:30", artist:"Band2", going: [], notification: false}, {time:"22:30", artist:"Band3", going: [], notification: false}, {time:"00:30", artist:"Band4", going: [], notification: false}]
 		},
 		{
 			name:'Stage B',
