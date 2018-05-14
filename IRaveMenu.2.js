@@ -706,17 +706,17 @@
 	}*/
 	function drawConcludeOrderScreen(){
 		document.getElementById("ItemsList").innerHTML='';
-		document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';
+		document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with ';
 		var total_price=0;
 		var total_time=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
-			document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;
+			document.getElementById("ItemsList").innerHTML+='<li>'+item.stand+'->'+item.name+' price='+item.price+'€</li>';
+			document.getElementById("ItemsList").innerHTML+='<li></li>';
 			total_price+=item.price;
 			total_time+=item.time;
 		}
-		document.getElementById("totalPrice").innerHTML=total_price+' €';
-		document.getElementById("totalTime").innerHTML=totalTime+' min';
+		document.getElementById("totalPrice").innerHTML='Total price= '+total_price+' €';
+		document.getElementById("totalTime").innerHTML='Expected time= '+total_time+' min';
 	}
 
 	function checkOrder(){
