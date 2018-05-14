@@ -62,3 +62,12 @@
 	height: 14px;
 }
 
+.bagIcon{
+    position:absolute;
+    top:2px;
+    left:20px;
+	width: 18px;
+	height: 18px;
+    
+}
+
