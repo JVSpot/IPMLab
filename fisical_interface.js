@@ -1,5 +1,7 @@
 //Interaction via "fisical buttons"
 
+var main_menu_array = [ "Map","Schedule","Contacts","OrderMe","Definitions" ];
+
 
 function option_selector(optionID){
 	document.getElementById("scroll_ok").onclick = document.getElementById(optionID).onclick;
@@ -40,4 +42,8 @@ function set_selection_array(option_array){
 	option_selector(option_array[0]);
 	document.getElementById("scroll_down").onclick = scroll_down(option_array,0);
 	document.getElementById("scroll_up").onclick = scroll_up(option_array,0);
+}
+
+function get_id_list(containerID){
+	
 }
