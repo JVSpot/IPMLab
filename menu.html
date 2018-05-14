@@ -95,20 +95,41 @@
 				<ul id="TimesofNotification"></ul>
 			</div>
 			<div id="FoodStandsScreen" style="display: none">
+				<div id="orderPop1" onclick="openScreen('ConcludeOrderScreen')">
+					<div id="numItems1"></div>
+				</div>
 				<h1 id="FoodStandsHead">Select a stand</h1>
 				<div class="dragscroll" id="StandsList"></div>
 			</div>
 			<div id="OrderTypesScreen" style="display: none">
+				<div id="orderPop2" onclick="openScreen('ConcludeOrderScreen')">
+					<div id="numItems2"></div>
+				</div>
 				<h1 id="StandName"></h1>
 				<ul class="dragscroll" id="OrderTypesList"></ul>
 			</div>
-			<div id="FoodScreen" style="display: none">
+			<div id="ItemsScreen" style="display: none">
+				<div id="orderPop3" onclick="openScreen('ConcludeOrderScreen')">
+					<div id="numItems3"></div>
+				</div>
 				<ul class="dragscroll" id="FoodsList"></ul>
 			</div>
-			<div id="CheckOrderScreen" style="display: none">
-				<ul class="dragscroll" id="FoodInfo"></ul>
+			<div id="CheckItemScreen" style="display: none">
+				<div id="orderPop4" onclick="openScreen('ConcludeOrderScreen')">
+					<div id="numItems4"></div>
+				</div>
+				<ul class="dragscroll" id="ItemInfo"></ul>
+				<div class="selectable" id="checkItemButton" onclick="checkItem()">Check item</div>
+				<div class="selectable" id="itemsBackButton"onclick="backbutton()">Back</div>
 			</div>
-
+			<div id="ConcludeOrderScreen" style="display: none">
+				<div id="ConcludeOrderTitle">Check your order</div>
+				<div id="ConcludeOrderMensage"></div>
+				<ul class="dragscroll" id="ItemsList"></ul>
+				<div id="totalPrice"></div>
+				<div class="selectable" id="checkOrderButton" onclick="checkOrder()">Check item</div>
+				<div class="selectable" id="ordeBackButton"onclick="backbutton()">Back</div>
+			</div>
 		</div>	
 		<div id="buttons_confirm" style="visibility: hidden">
 	  	<div class="selectable" id="Yes_button"> <div type="button"> Yes </div> </div>

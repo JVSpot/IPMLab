@@ -1,5 +1,6 @@
 
 	var lastscreens=[];
+	var currentOrder=[];
 	var tid=setInterval(drawDateandHours, 1000);
 	var username = "Eu";
 
@@ -89,11 +90,14 @@
 		if(screename=="OrderTypesScreen"){
 			drawOrderTypeScreen();
 		}
-		if(screename=="FoodScreen"){
-			drawFoodScreen();
+		if(screename=="ItemsScreen"){
+			drawItemsScreen();
 		}
-		if(screename=="CheckOrderScreen"){
-			drawCheckOrderScreen();
+		if(screename=="CheckItemScreen"){
+			drawCheckItemScreen();
+		}
+		if(screename=="ConcludeOrderScreen"){
+			drawConcludeOrderScreen();
 		}
 		showScreen(screename);
 	}
@@ -113,8 +117,9 @@
 		document.getElementById("ConcertNotificationTime").style.display = "none";
 		document.getElementById("FoodStandsScreen").style.display = "none";
 		document.getElementById("OrderTypesScreen").style.display = "none";
-		document.getElementById("FoodScreen").style.display = "none";
-		document.getElementById("CheckOrderScreen").style.display = "none";
+		document.getElementById("ItemsScreen").style.display = "none";
+		document.getElementById("CheckItemScreen").style.display = "none";
+		document.getElementById("ConcludeOrderScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
 
@@ -140,7 +145,7 @@
 				lastscreens.pop();                                //remove o ecra atual do array
 				var lastscreen=lastscreens.pop();				  //remove o ecra anterior do array e guarda-o para o abrir
 				openScreen(lastscreen);	
-			}	
+			}
 			else{
 				openScreen("NotificationsMenu");
 			};
@@ -350,6 +355,9 @@
 			if(notification.type=="Concert-notification"){
 				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</li>';
 			}
+			if(notification.type=="FoodOrder-notification"){
+				document.getElementById(screen).innerHTML +=  '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">FoodOrder.</li>';
+			}
 			
 		}
 	}
@@ -395,6 +403,13 @@
 					document.getElementById("Notification_button2").innerHTML="Delete Notification";
 					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
 
+				}
+				if(notification.type=="FoodOrder-notification"){
+					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
+					for(item of notification.order){
+						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+'->'+item.name+' price='+item.price+'€'+'</p>';
+					}
+					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
 				}
 			}
 		}
@@ -533,7 +548,6 @@
 		var stage = JSON.parse(localStorage.getItem("CurrentConcert"))[1];
 		var concert_index = JSON.parse(localStorage.getItem("CurrentConcert"))[2];
 		document.getElementById("TimesofNotification").innerHTML='';
-		console.log(lastscreens[lastscreens.length-2]);
 		if(lastscreens[lastscreens.length-2]=="ConcertScreen"){
 			for(i=0; i<notificationsData.times.length; i++){
 				document.getElementById("TimesofNotification").innerHTML += '<li class="selectable button" id="NotificationTime" onclick="addConcertNotification('+notificationsData.times[i]+')">' +notificationsData.times[i]+'min</li>';  
@@ -602,10 +616,9 @@
 
 	function drawFoodStandsScreen(){
 		document.getElementById("StandsList").innerHTML = '';
+		document.getElementById("numItems1").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
-		console.log(foodstands.stands);
 		for(i=0; i<foodstands.stands.length; i++){
-			console.log("ola");
 			stand=foodstands.stands[i];
 			document.getElementById("StandsList").innerHTML += '<div id="stand'+stand.name+'" class="selectable" onclick="openOrderTypeScreen('+i+')">'+stand.name+'</div>';	
 		}
@@ -617,49 +630,93 @@
 	}
 
 	function drawOrderTypeScreen(){
+		document.getElementById("numItems2").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		document.getElementById("OrderTypesList").innerHTML="";
 		document.getElementById("StandName").innerHTML=foodstands.stands[standindex].name;
-		for(i=0; i< foodstands.stands[standindex].order_types.length; i++){
-			type=foodstands.stands[standindex].order_types[i];
-			document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="type'+type.name+'" onclick="openFoodScreen('+i+')">'+type.name+'</div>';	
+		for(i=0; i< foodstands.stands[standindex].item_types.length; i++){
+			type=foodstands.stands[standindex].item_types[i];
+			document.getElementById("OrderTypesList").innerHTML += '<div class="selectable" id="type'+type.name+'" onclick="openItemsScreen('+i+')">'+type.name+'</div>';	
 		}
 	}
 
-	function openFoodScreen(typeindex){
+	function openItemsScreen(typeindex){
 		localStorage.setItem("Currenttype", JSON.stringify(typeindex));
-		openScreen("FoodScreen");
+		openScreen("ItemsScreen");
 	}
 
-	function drawFoodScreen(){
+	function drawItemsScreen(){
+		document.getElementById("numItems3").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
 		document.getElementById("FoodsList").innerHTML="";
-		for(i=0; i<foodstands.stands[standindex].order_types[typeindex].orders.length; i++) {
-			order=foodstands.stands[standindex].order_types[typeindex].orders[i];
-			document.getElementById("FoodsList").innerHTML += '<div class="selectable" id="order'+order.name+'" onclick="openFoodInfoScreen('+i+')">'+order.name+'</div>';
+		for(i=0; i<foodstands.stands[standindex].item_types[typeindex].items.length; i++) {
+			item=foodstands.stands[standindex].item_types[typeindex].items[i];
+			document.getElementById("FoodsList").innerHTML += '<div class="selectable" id="item'+item.name+'" onclick="openFoodInfoScreen('+i+')">'+item.name+'</div>';
 		}
 	}
 
-	function openFoodInfoScreen(orderIndex){
-		localStorage.setItem("CurrentOrder", JSON.stringify(orderIndex));
-		openScreen("CheckOrderScreen");
+	function openFoodInfoScreen(itemIndex){
+		localStorage.setItem("CurrentItem", JSON.stringify(itemIndex));
+		openScreen("CheckItemScreen");
 	}
 
-	function drawCheckOrderScreen(){
+	function drawCheckItemScreen(){
+		document.getElementById("numItems4").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
-		var orderindex = JSON.parse(localStorage.getItem("CurrentOrder"));
-		order = foodstands.stands[standindex].order_types[typeindex].orders[orderindex];
-		document.getElementById("FoodInfo").innerHTML = '<p>'+order.name+'</p>';
-		document.getElementById("FoodInfo").innerHTML += '<p>'+(order.description||"")+'</p>';
-		document.getElementById("FoodInfo").innerHTML += '<p>Price:'+order.price+'</p>';
+		var itemindex = JSON.parse(localStorage.getItem("CurrentItem"));
+		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
+		document.getElementById("ItemInfo").innerHTML = '<p>'+item.name+'</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>'+(item.description||"")+'</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>Price:'+item.price+'</p>';
 	}
 
+	function checkItem(){
+		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));								
+		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
+		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
+		var itemindex = JSON.parse(localStorage.getItem("CurrentItem"));
+		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
+		currentOrder.push({
+			stand:foodstands.stands[standindex].name,
+			name:item.name,
+			price:item.price
+		});
+		console.log(currentOrder);
+		backbutton();
+	}
 
+	/*function removeItem(){
+
+	}*/
+	function drawConcludeOrderScreen(){
+		document.getElementById("ItemsList").innerHTML='';
+		/*document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';*/
+		var total_price=0;
+		for(item of currentOrder){
+			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
+			/*document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;*/
+			total_price+=item.price;
+		}
+		document.getElementById("totalPrice").innerHTML=total_price;
+	}
+
+	function checkOrder(){
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		notificationsData.notifications.push({
+			id: Math.random(),
+			type:"FoodOrder-notification",
+			order:currentOrder,
+			orderTime:getTime()
+		});
+		currentOrder=[];
+		loadNotifications(notificationsData);
+		backbutton();
+	}
 	//others
 
 	function information(msg) {
