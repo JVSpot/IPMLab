@@ -248,8 +248,9 @@
 		//document.getElementById("MenuOptionsHeader").innerHTML = ""
 		document.getElementById("MenuOptionsVals").innerHTML = "";
 		for(var option of menu.opcoes) {
-			document.getElementById("MenuOptionsVals").innerHTML += '<i > <img  class="' + option.class + ' selectable" id="' + option.id + '" src="' + option.img + '" onclick="'+ option.onclick +'" onmouseover="setMainMenuText(\''+ option.texto+'\')"></i>'; 
+			document.getElementById("MenuOptionsVals").innerHTML += '<i > <img  class="' + option.class + ' selectable" id="' + option.id + '" src="' + option.img + '" onclick="'+ option.onclick +'""></i>'; 
 		}
+		
 	}
 
 	function setMainMenuText(s)

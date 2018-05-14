@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="contacts.css">
 	<link rel="stylesheet" type="text/css" href="schedule.css">
 	<link rel="stylesheet" type="text/css" href="notif_ls.css">
+	<link rel="stylesheet" type="text/css" href="food.css">
 	 
 </head>
 
@@ -49,8 +50,8 @@
 			</div>
 			<div id="NotificationOptions" style="display: :none">
 				<div id="NotificationInfo"></div>
-				<div id="Notification_button1" style="visibility: hidden"></div>
-				<div id="Notification_button2" style="visibility: hidden"></div>
+				<div id="Notification_button1" class="selectable" style="visibility: hidden"></div>
+				<div id="Notification_button2" class="selectable" style="visibility: hidden"></div>
 			</div>
 			<div id="ContactsMenu" style="display: none">
 		        <h1 id="ContactsTitle">Contacts</h1>
@@ -106,7 +107,7 @@
 					<div id="numItems2"></div>
 				</div>
 				<h1 id="StandName"></h1>
-				<ul class="dragscroll" id="OrderTypesList"></ul>
+				<ul class="dragscroll Lists" id="OrderTypesList"></ul>
 			</div>
 			<div id="ItemsScreen" style="display: none">
 				<div id="orderPop3" onclick="openScreen('ConcludeOrderScreen')">
