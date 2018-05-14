@@ -1,8 +1,8 @@
 :root{
 	--even-list-color: rgb(56, 105, 138);
 	--odd-list-color: rgb(56, 85, 138);
-	--even-list-color2: rgb(110, 162, 196);
-	--odd-list-color2: rgb(74, 138, 181);
+	--even-list-color2: rgb(0, 128, 255);
+	--odd-list-color2: rgb(0, 102, 204);
   --neutral-btn-color: rgb(56, 167, 211);
 }
 
