@@ -239,6 +239,8 @@
 			
 			if(notification.type=="Concert-notification")
 				document.getElementById("NotificationsList").innerHTML += '<li><marquee  class="notification" behavior="scroll" direction="left">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</marquee>' +' </li>';  
+			if(notification.type=="FoodOrder-notification")
+				document.getElementById("NotificationsList").innerHTML +=  '<li><marquee  class="notification" behavior="scroll" direction="left">FoodOrder.</marquee>' +' </li>';  ;
 		}
 	}
 
@@ -414,6 +416,8 @@
 					console.log(total_time);
 					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p>Expected time:'+total_time+'€</p>';
+					document.getElementById("Notification_button1").innerHTML="Received! Stop sharing my location!";
+					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
 			}
 		}
