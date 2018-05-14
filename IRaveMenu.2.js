@@ -480,7 +480,7 @@
 		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
 		for(i=0; i<currentSchedule.days.length; i++){
 			day=currentSchedule.days[i];
-			document.getElementById("Days").innerHTML += '<div id="'+day.day+'" class="Lists2">'+day.name+'</div>';	
+			document.getElementById("Days").innerHTML += '<div id="'+day.day+'" class="Lists">'+day.name+'</div>';	
 			for(j=0; j<currentSchedule.days[i].stages.length; j++){
 				stage=currentSchedule.days[i].stages[j];
 				document.getElementById(day.day).innerHTML += '<div class="selectable stage" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
