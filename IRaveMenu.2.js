@@ -435,7 +435,7 @@
 					console.log(total_time);
 					document.getElementById("NotificationInfo").innerHTML+='<p>Hour of the order:'+notification.orderTime+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p><img id="clock" src="icons/clock.png">'+total_time+' min</p>';
-					document.getElementById("NotificationInfo").innerHTML+='<p>Total €: '+total_price+' €</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Total: '+total_price+' €</p>';
 					document.getElementById("Notification_button1").innerHTML="Received! Stop sharing my location!";
 					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
@@ -734,7 +734,7 @@
 		var total_time=0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><div>'+item.name+'</div><span>'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </span> </li>';
+			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'" class="foodListItem"><div class="foodListItemTitle">'+item.name+'</div><div class="foodListItemPrice">'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </div> </li>';
 			total_price+=item.price;
 			total_time+=item.time;
 			i++;

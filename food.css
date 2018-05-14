@@ -82,3 +82,12 @@
     
 }
 
+.foodListItemTitle {
+	padding: 5px 0 5px 0;
+	background-color: var(--even-list-color) !important;
+}
+
+.foodListItemPrice {
+	padding: 0 0 10px 0;
+	background-color: var(--odd-list-color) !important;
+}
