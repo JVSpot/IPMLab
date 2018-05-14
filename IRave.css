@@ -10,8 +10,10 @@
 .Lists div:nth-child(odd) {background: var(--odd-list-color)}
 .Lists div:nth-child(even) {background:  var(--even-list-color)}
 
-.Lists2 div:nth-child(odd) {background: var(--odd-list-color2)}
-.Lists2 div:nth-child(even) {background:  var(--even-list-color2)}
+.List{
+    overflow:auto;
+}
+
 
 
 body {
