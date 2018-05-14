@@ -543,7 +543,7 @@
 			document.getElementById("SetGoing").style.backgroundColor = "#FF0000";
 		} else {
 			document.getElementById("SetGoing").innerHTML = "I'm going!";
-			document.getElementById("SetGoing").style.backgroundColor = "#38a7d3";
+			document.getElementById("SetGoing").style.backgroundColor = "#0000FF";
 		}
 	}
 
