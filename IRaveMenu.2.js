@@ -715,8 +715,8 @@
 			total_price+=item.price;
 			total_time+=item.time;
 		}
-		document.getElementById("totalPrice").innerHTML='Total price= '+total_price+' €';
-		document.getElementById("totalTime").innerHTML='Expected time= '+total_time+' min';
+		document.getElementById("totalPrice").innerHTML='Total €= '+total_price+' €';
+		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png" > '+total_time+' min';
 	}
 
 	function checkOrder(){
