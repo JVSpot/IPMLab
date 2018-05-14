@@ -720,18 +720,23 @@
 		backbutton();
 	}
 
-	/*function removeItem(){
+	function removeItem(i){
+		currentOrder.splice(i,1);
+		openScreen('ConcludeOrderScreen');
+		backbutton();
+	}
 
-	}*/
 	function drawConcludeOrderScreen(){
 		document.getElementById("ItemsList").innerHTML='';
 		document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location';
 		var total_price=0;
 		var total_time=0;
+		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+='<li><p>'+item.stand+':'+item.name+'</p><p>'+item.price+'€</p></li>';
+			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><p>'+item.stand+':'+item.name+'</p><p>'+item.price+'€</p> <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')"></li>';
 			total_price+=item.price;
 			total_time+=item.time;
+			i++;
 		}
 		document.getElementById("totalPrice").innerHTML='Total €: '+total_price+' €';
 		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png">'+total_time+' min';
