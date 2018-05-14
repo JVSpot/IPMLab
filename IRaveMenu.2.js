@@ -410,13 +410,16 @@
 				if(notification.type=="FoodOrder-notification"){
 					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
 					var total_time=0;
+					var total_price=0;
 					for(item of notification.order){
-						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+'->'+item.name+' price='+item.price+'€'+'</p>';
+						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+':'+item.name+' price='+item.price+'€'+'</p>';
 						total_time+=item.time;
+						total_price+=item.price;
 					}
 					console.log(total_time);
-					document.getElementById("NotificationInfo").innerHTML+='<p>Hours of the order:'+notification.orderTime+'</p>';
-					document.getElementById("NotificationInfo").innerHTML+='<p>Expected time:'+total_time+'€</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Hour of the order:'+notification.orderTime+'</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p><img id="clock" src="icons/clock.png">'+total_time+' min</p>';
+					document.getElementById("NotificationInfo").innerHTML+='<p>Total €: '+total_price+' €</p>';
 					document.getElementById("Notification_button1").innerHTML="Received! Stop sharing my location!";
 					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
 				}
@@ -681,8 +684,8 @@
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
 		document.getElementById("ItemInfo").innerHTML = '<p>'+item.name+'</p>';
 		document.getElementById("ItemInfo").innerHTML += '<p>'+(item.description||"")+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>Price:'+item.price+' €</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>Expected time:'+item.time+' min</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p>€:'+item.price+'</p>';
+		document.getElementById("ItemInfo").innerHTML += '<p><img id="clock" src="icons/clock.png">:'+item.time+' min</p>';
 	}
 
 	function addItem(){
@@ -710,13 +713,12 @@
 		var total_price=0;
 		var total_time=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+='<li>'+item.stand+'->'+item.name+' price='+item.price+'€</li>';
-			document.getElementById("ItemsList").innerHTML+='<li></li>';
+			document.getElementById("ItemsList").innerHTML+='<li><p>'+item.stand+':'+item.name+'</p><p>'+item.price+'€</p></li>';
 			total_price+=item.price;
 			total_time+=item.time;
 		}
-		document.getElementById("totalPrice").innerHTML='Total €= '+total_price+' €';
-		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png" > '+total_time+' min';
+		document.getElementById("totalPrice").innerHTML='Total €: '+total_price+' €';
+		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png">'+total_time+' min';
 	}
 
 	function checkOrder(){
