@@ -13,7 +13,7 @@
 			img: "icons/map.png",
 			texto: "Map",
 			class: "menuIcon",
-			onclick: "information('Em desenvolvimento')"
+			onclick: "openScreen('MapMockView')"
 		},
 		{
 			id: "Schedule",
@@ -41,7 +41,7 @@
 			img: "icons/settings.png",
 			texto: "Definitions",
 			class: "menuIcon",
-			onclick: "information('Em desenvolvimento')"
+			onclick: "openScreen('SettingsView')"
 		}
 		]
 	}
@@ -99,6 +99,12 @@
 		if(screename=="ConcludeOrderScreen"){
 			drawConcludeOrderScreen();
 		}
+		if(screename=="MapMockView"){
+			drawMapMockView();
+		}
+		if(screename=="SettingsView"){
+			drawSettingsView();
+		}
 		showScreen(screename);
 	}
 
@@ -120,6 +126,8 @@
 		document.getElementById("ItemsScreen").style.display = "none";
 		document.getElementById("AddItemScreen").style.display = "none";
 		document.getElementById("ConcludeOrderScreen").style.display = "none";
+		document.getElementById("MapMockView").style.display = "none";
+		document.getElementById("SettingsView").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
 
@@ -265,6 +273,14 @@
 		document.getElementById("notificationNum").innerHTML= notificationsData.notifications.length+'!';
 	}
 
+
+	function drawMapMockView() {
+		//TODO: set screen properties
+	}
+
+	function drawSettingsView() {
+		//TODO
+	}
 
 	//ContactsMenu
 
