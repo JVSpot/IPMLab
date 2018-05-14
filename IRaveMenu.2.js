@@ -428,17 +428,17 @@
 					var total_time=0;
 					var total_price=0;
 					for(item of notification.order){
-						document.getElementById("NotificationInfo").innerHTML+='<p>'+item.stand+':'+item.name+' '+item.price+'€'+'</p>';
+						document.getElementById("NotificationInfo").innerHTML+='<div class="NotificationInfo">'+item.stand+':'+item.name+' '+item.price+'€'+'</div>';
 						total_time+=item.time;
 						total_price+=item.price;
 					}
 					console.log(total_time);
 					document.getElementById("NotificationInfo").innerHTML+='<p>Time of order:'+notification.orderTime+'</p>';
 					document.getElementById("NotificationInfo").innerHTML+='<p><img id="clock" src="icons/clock.png">'+total_time+' min</p>';
-					document.getElementById("NotificationInfo").innerHTML+='<p>Total €: '+total_price+' €</p>';
-					document.getElementById("Notification_button1").style.visibility = 'visible';
-					document.getElementById("Notification_button1").innerHTML="Received! Delete notification";
-					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("NotificationInfo").innerHTML+='<p>Total:'+total_price+' €</p>';
+					document.getElementById("Notification_button2").style.visibility = 'visible';
+					document.getElementById("Notification_button2").innerHTML="Delete notification";
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
 				}
 			}
 		}
@@ -702,7 +702,7 @@
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
 		document.getElementById("ItemInfo").innerHTML = '<div class="itemName">'+item.name+'</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemDescription">'+(item.description||"")+'</div>';
-		document.getElementById("ItemInfo").innerHTML += '<div class="itemPrice">€:'+item.price+'</div>';
+		document.getElementById("ItemInfo").innerHTML += '<div class="itemPrice">'+item.price+'€</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemTime"><img id="clock" src="icons/clock.png">:'+item.time+' min</div>';
 	}
 
@@ -740,7 +740,7 @@
 			total_time+=item.time;
 			i++;
 		}
-		document.getElementById("totalPrice").innerHTML='Total €: '+total_price+' €';
+		document.getElementById("totalPrice").innerHTML='Total: '+total_price+' €';
 		document.getElementById("totalTime").innerHTML='<img id="clock" src="icons/clock.png">'+total_time+' min';
 	}
 	

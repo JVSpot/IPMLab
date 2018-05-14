@@ -86,3 +86,8 @@
 	overflow-y: auto;
     overflow-x:hidden;
 }
+
+.NotificationInfo {
+    padding:5px;
+}
+
