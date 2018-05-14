@@ -1,15 +1,15 @@
 
 
 .orderPop{
-	border-radius: 100%;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
 	background-color: green;
-	padding-top: 100%;
-	position: absolute;
-	top: -100px;
 }
 
-#FoodList{
+#FoodsList{
+	height: 105px;
 	overflow-y: scroll;
+	font-size: 14px;
 }
 
 #FoodStandsHead{
@@ -17,6 +17,7 @@
 	padding: 3px;
 }
 
+<<<<<<< HEAD
 .orderBackButton{
 	position: relative;
 	top:0;
@@ -36,4 +37,16 @@
 	width: 23%;
 	border-radius: 100%;
 }
+=======
+
+
+
+
+
+
+
+
+
+
+>>>>>>> ee4b7f15c87221462b12f731f31b2f8cee252743
 

@@ -1,14 +1,4 @@
 
-#Days div:nth-child(even) {background:  var(--even-list-color)}
-#Days div:nth-child(odd) {background: var(--odd-list-color)}
-
-
-.Stage div:nth-child(even) {background:  var(--even-list-color)}
-.Stage div:nth-child(odd) {background: var(--odd-list-color)}
-
-#Shows div:nth-child(even) {background:  var(--even-list-color)}
-#Shows div:nth-child(odd) {background: var(--odd-list-color)}
-
 #Days{
     overflow-y: auto;
     text-align:center;
