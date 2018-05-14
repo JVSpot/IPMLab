@@ -705,12 +705,12 @@
 	}*/
 	function drawConcludeOrderScreen(){
 		document.getElementById("ItemsList").innerHTML='';
-		/*document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';*/
+		document.getElementById("ConcludeOrderMensage").innerHTML='By checking you will be sharing your location with:';
 		var total_price=0;
 		var total_time=0;
 		for(item of currentOrder){
 			document.getElementById("ItemsList").innerHTML+=item.stand+'->'+item.name+' price='+item.price+'€';
-			/*document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;*/
+			document.getElementById("ConcludeOrderMensage").innerHTML+=item.stand;
 			total_price+=item.price;
 			total_time+=item.time;
 		}
