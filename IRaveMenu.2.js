@@ -733,7 +733,7 @@
 		var total_time=0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><p>'+item.stand+':'+item.name+'</p><span>'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> <span> </li>';
+			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><div>'+item.name+'</div><span>'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </span> </li>';
 			total_price+=item.price;
 			total_time+=item.time;
 			i++;
