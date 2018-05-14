@@ -480,7 +480,7 @@
 		document.getElementById("ScheduleDaysTitle").innerHTML = 'Schedule';
 		for(i=0; i<currentSchedule.days.length; i++){
 			day=currentSchedule.days[i];
-			document.getElementById("Days").innerHTML += '<div id="'+day.day+'" class="Lists2">'+day.name+'</div>';	
+			document.getElementById("Days").innerHTML += '<div id="'+day.day+'" class="Lists">'+day.name+'</div>';	
 			for(j=0; j<currentSchedule.days[i].stages.length; j++){
 				stage=currentSchedule.days[i].stages[j];
 				document.getElementById(day.day).innerHTML += '<div class="selectable stage" id="sta'+stage.stage+'" onclick="openScheduleScreen('+i+', '+j+')">'+stage.name+'</div>';	
@@ -698,10 +698,10 @@
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
 		var itemindex = JSON.parse(localStorage.getItem("CurrentItem"));
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
-		document.getElementById("ItemInfo").innerHTML = '<p>'+item.name+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>'+(item.description||"")+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p>€:'+item.price+'</p>';
-		document.getElementById("ItemInfo").innerHTML += '<p><img id="clock" src="icons/clock.png">:'+item.time+' min</p>';
+		document.getElementById("ItemInfo").innerHTML = '<div class="itemName">'+item.name+'</div>';
+		document.getElementById("ItemInfo").innerHTML += '<div class="itemDescription">'+(item.description||"")+'</div>';
+		document.getElementById("ItemInfo").innerHTML += '<div class="itemPrice">€:'+item.price+'</div>';
+		document.getElementById("ItemInfo").innerHTML += '<div class="itemTime"><img id="clock" src="icons/clock.png">:'+item.time+' min</div>';
 	}
 
 	function addItem(){
@@ -733,7 +733,7 @@
 		var total_time=0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><p>'+item.stand+':'+item.name+'</p><p>'+item.price+'€</p> <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')"></li>';
+			document.getElementById("ItemsList").innerHTML+='<li id="item'+i+'"><div>'+item.name+'</div><span>'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </span> </li>';
 			total_price+=item.price;
 			total_time+=item.time;
 			i++;
