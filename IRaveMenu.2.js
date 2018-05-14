@@ -93,8 +93,8 @@
 		if(screename=="ItemsScreen"){
 			drawItemsScreen();
 		}
-		if(screename=="CheckItemScreen"){
-			drawCheckItemScreen();
+		if(screename=="AddItemScreen"){
+			drawAddItemScreen();
 		}
 		if(screename=="ConcludeOrderScreen"){
 			drawConcludeOrderScreen();
@@ -118,7 +118,7 @@
 		document.getElementById("FoodStandsScreen").style.display = "none";
 		document.getElementById("OrderTypesScreen").style.display = "none";
 		document.getElementById("ItemsScreen").style.display = "none";
-		document.getElementById("CheckItemScreen").style.display = "none";
+		document.getElementById("AddItemScreen").style.display = "none";
 		document.getElementById("ConcludeOrderScreen").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
@@ -669,10 +669,10 @@
 
 	function openFoodInfoScreen(itemIndex){
 		localStorage.setItem("CurrentItem", JSON.stringify(itemIndex));
-		openScreen("CheckItemScreen");
+		openScreen("AddItemScreen");
 	}
 
-	function drawCheckItemScreen(){
+	function drawAddItemScreen(){
 		document.getElementById("numItems4").innerHTML = currentOrder.length;
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
@@ -685,7 +685,7 @@
 		document.getElementById("ItemInfo").innerHTML += '<p>Expected time:'+item.time+' min</p>';
 	}
 
-	function checkItem(){
+	function addItem(){
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));								
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));

@@ -17,15 +17,6 @@
 	padding: 3px;
 }
 
-#orderBackButton{
-	position: absolute;
-	bottom: 2px;
-	left:20px;
-	width: 20px;
-	height: 20px;
-
-}
-
 #checkOrderButton{
 	position: absolute;
 	bottom: 2px;
@@ -34,17 +25,10 @@
 	height: 20px;
 }
 
-#checkItemButton{
+#addItemButton{
 	position: absolute;
 	bottom: 2px;
 	right:20px;
-	width: 20px;
-	height: 20px;
-}
-#itemsBackButton{
-	position: absolute;
-	bottom: 2px;
-	left:20px;
 	width: 20px;
 	height: 20px;
 }
