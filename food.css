@@ -15,8 +15,8 @@
 }
 
 #FoodsList{
-	height: 105px;
-	overflow-y: auto;
+	height: 85px;
+	overflow: auto;
 	font-size: 14px;
 }
 
@@ -88,6 +88,5 @@
 }
 
 .foodListItemPrice {
-	padding: 0 0 10px 0;
 	background-color: var(--odd-list-color) !important;
 }
