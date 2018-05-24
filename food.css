@@ -115,3 +115,43 @@
 	background-color: var(--odd-list-color) !important;
 	padding-bottom: 5px;
 }
+
+#minusItemButton{
+	position: absolute;
+	top:87px;
+	right:15px;
+	width: 18px;
+	height: 18px;
+
+}
+
+#plusItemButton{
+	position: absolute;
+	top:87px;
+	left: 15px;
+	width: 18px;
+	height: 18px;
+
+}
+
+#checkItemButton{
+	position: absolute;
+	top:107px;
+	left: 48px;
+	width: 18px;
+	height: 18px;
+
+}
+
+.itemPrice{
+	font-size: 14px;
+}
+
+.itemTime{
+	font-size: 14px;
+}
+
+#n_items{
+	position: relative;
+	top:10px;
+}
