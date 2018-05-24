@@ -72,6 +72,9 @@
 			//loadContacts(contactsdata);
 			drawContactMenu();
 		};
+		if(screename=="ContactOption"){
+			drawContactOption();
+		}
 		if(screename=="ScheduleMenuDays"){
 			drawScheduleMenuDays();
 		}
@@ -116,6 +119,7 @@
 		document.getElementById("NotificationOptions").style.display= "none";
 		document.getElementById("ContactsMenu").style.display = "none";
 		document.getElementById("ContactMenu").style.display = "none";
+		document.getElementById("ContactOption").style.display = "none";
 		document.getElementById("AddContactMenu").style.display = "none";
 		document.getElementById("ScheduleMenuDays").style.display = "none";
 		document.getElementById("ScheduleScreen").style.display = "none";
@@ -166,10 +170,10 @@
 		if (document.getElementById("ConfirmationMsg").style.display=="block"){
 			var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
 			document.getElementById("buttons_confirm").style.visibility = 'hidden';
-			document.getElementById("ShareLocalization").style.display = "none";
+			document.getElementById("ShareLocation").style.display = "none";
 			document.getElementById("DeleleContact").style.display = "none";	
 			
-			if (currentmsg=="sharelocalization"){			//caso seja a mensagem de aviso de partilhar localização
+			if (currentmsg=="ShareLocation"){			//caso seja a mensagem de aviso de partilhar localização
 				lastscreens.pop();
 				document.getElementById("ConfirmationMsg").onclick= function(){opencontactscreen(currentcontact);};
 				var notification = {id:'', type:'Location-send', user:currentcontact};
@@ -293,6 +297,9 @@
 				document.getElementById("ContactsName").innerHTML += '<li class="selectable" onclick="' +contactsData.contacts[i].onclick +'"> <div class="'+contactsData.contacts[i].class+ '" id="' + contactsData.contacts[i].name + '">'+ contactsData.contacts[i].name+'</div> </li>'; 
 			}
 		}
+		else{
+			alert("You don't have contacts added");
+		}
 	}
 
 
@@ -300,7 +307,6 @@
 
 	function opencontactscreen(contact){
 		localStorage.setItem("CurrentContact", JSON.stringify(contact));		//guarda na localstorage o contacto que se prentende abrir para se poder aceder ao mesmo mais facilmente
-		
 		openScreen("ContactMenu");
 	}
 
@@ -312,53 +318,86 @@
 		document.getElementById("ContactName").innerHTML = "";
 		document.getElementById("ContactNumber").innerHTML = "";
 		document.getElementById("buttons_confirm").style.visibility = 'hidden';
-		document.getElementById("ShareLocalization").style.display = "block";
+		document.getElementById("ShareLocation").style.display = "block";
 		document.getElementById("DeleleContact").style.display = "block";
+		document.getElementById("DeleleContact").onclick=function(){opencontactoptioncreen('delelecontact')}
 		document.getElementById("ConfirmationMsg").onclick= null;
-		if(num_contacts != null){
-			for(let i=0; i<num_contacts; i++){
-				if (contactsData.contacts[i].name==currentcontact){
-					document.getElementById("ContactName").innerHTML += '<div id="ContactName">' + contactsData.contacts[i].name + ' </div>'; 
-					document.getElementById("ContactNumber").innerHTML += '<div id="ContactNumber"> Number:'+contactsData.contacts[i].number+'</div>'; 
-				}
-			}
+		var notification = {id:Math.random(), type:'Location-send', user:currentcontact};
+		if(verifyNotification(notification)==false){
+			document.getElementById("ShareLocation").onclick=function(){opencontactoptioncreen('ShareLocation')}
+			document.getElementById("ShareLocation").style.backgroundColor = "#00AA00";
+			document.getElementById("ShareLocation").innerHTML="Share location";
 		}
 		else{
-			alert("You don't have contacts added");
+			document.getElementById("ShareLocation").onclick=function(){opencontactoptioncreen('ShareLocation')}
+			document.getElementById("ShareLocation").style.backgroundColor = "#FF0000";
+			document.getElementById("ShareLocation").innerHTML="Stop sharing location";
+		}
+		for(let i=0; i<num_contacts; i++){
+			if (contactsData.contacts[i].name==currentcontact){
+				document.getElementById("ContactName").innerHTML += '<div id="ContactName">' + contactsData.contacts[i].name + ' </div>'; 
+				document.getElementById("ContactNumber").innerHTML += '<div id="ContactNumber"> Number:'+contactsData.contacts[i].number+'</div>'; 
+			}
 		}
 	}
 
-		//mostra no visor mensagens de alerta para confirmar acoes (neste cado a partilha de localizacao e o apagar contacto)
-	function confirmation(type){
-		localStorage.setItem("Msg", JSON.stringify(type));
+	function opencontactoptioncreen(type){
+		localStorage.setItem("CurrentOption", JSON.stringify(type));
+		openScreen("ContactOption");
+	}
+
+	function drawContactOption(){
+		var type = JSON.parse(localStorage.getItem("CurrentOption"));
 		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
-		document.getElementById("ConfirmationMsg").innerHTML = "";
-		if(type=="sharelocalization"){
-			var notification = {id:'', type:'Location-send', user:currentcontact};
-			if (verifyNotification(notification)==true){
+		if(type=="ShareLocation"){
+			var notification = {id:Math.random(), type:'Location-send', user:currentcontact};
+			if (verifyNotification(notification)==false){
 				document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> Share location with ' + currentcontact +'?</div>';
+				document.getElementById("Yes_button").onclick=function(){addLocationSendNotification()};
 			}
 			else{
-				document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> You are already sharing your location with ' + currentcontact +'.</div>';
-				document.getElementById("ConfirmationMsg").onclick= function(){opencontactscreen(currentcontact);};
-				var lastscreen=lastscreens.pop();
-				document.getElementById("ShareLocalization").style.display = "none";
-				document.getElementById("DeleleContact").style.display = "none";
-				return(0); 
+				id=verifyNotification(notification)
+				document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> Stop sharing your location with ' + currentcontact +'.</div>';
+				document.getElementById("Yes_button").onclick=function(){removeNotification(id)};
 			}
 		}
 		if(type=="delelecontact"){
 			document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> Delete ' + currentcontact +'?</div>';
+			document.getElementById("Yes_button").onclick=function(){deleteContact()};
 		}
-		document.getElementById("ShareLocalization").style.display = "none";
-		document.getElementById("DeleleContact").style.display = "none";
 		document.getElementById("ConfirmationMsg").style.display = "block";
 		document.getElementById("buttons_confirm").style.visibility = 'visible';
-		document.getElementById("Yes_button").onclick=function(){allow()};
-
 	}
 
+		//mostra no visor mensagens de alerta para confirmar acoes (neste cado a partilha de localizacao e o apagar contacto)
 
+	function addLocationSendNotification(){
+		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
+		var notification = {id:Math.random, type:'Location-send', user:currentcontact};
+		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
+		var numNotifications=Object.keys(notificationsData.notifications).length
+		notification.id=numNotifications;
+		notificationsData.notifications.push(notification);
+		loadNotifications(notificationsData);
+		document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> Your location is being shared with ' + currentcontact +'.</div>'; 	
+		backbutton();	
+	}
+
+	function deleteContact(){
+		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
+		var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
+		var num_contacts = contactsData.contacts.length;
+		var index_contact;
+		for(let i=0; i<num_contacts; i++){
+			if (contactsData.contacts[i].name==currentcontact)
+				index_contact=i;
+		};
+		contactsData.contacts.splice(index_contact,1);  
+		loadContacts(contactsData);
+		document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> You delete ' + currentcontact +'.</div>';
+		backbutton();
+		backbutton();
+	}
 	//notifications
 
 	function drawNotificationsList(screen){
@@ -466,9 +505,9 @@
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		for(var notification of notificationsData.notifications){
 			if (notification.type==n.type && notification.user==n.user)
-				return false;
+				return notification.id;
 		}
-		return true;
+		return false;
 	}
 
 
