@@ -15,8 +15,8 @@
 }
 
 #FoodsList{
-	height: 105px;
-	overflow-y: auto;
+	height: 85px;
+	overflow: auto;
 	font-size: 14px;
 }
 
@@ -43,7 +43,7 @@
 
 #deleteIcon{
 	position: relative;
-	top: 5px;
+	top: 8px;
 	width: 20px;
 	height: 20px;
 }
@@ -54,7 +54,11 @@
 
 #ItemsList{
 	font-size: 12px;
-	padding-bottom: 10px;
+	padding-bottom: 8px;
+}
+
+.foodListItem{
+	height: 45px;
 }
 
 #ConcludeOrderScreen{
@@ -83,11 +87,15 @@
 }
 
 .foodListItemTitle {
-	padding: 5px 0 5px 0;
+	position: relative;
+	z-index: 10;
+	padding: 3px 0 3px 0;
 	background-color: var(--even-list-color) !important;
 }
 
 .foodListItemPrice {
-	padding: 0 0 10px 0;
+	position: relative;
+	top:-7px;
 	background-color: var(--odd-list-color) !important;
+	padding-bottom: 5px;
 }
