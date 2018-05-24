@@ -164,43 +164,6 @@
 		}	
 	}
 
-	//botao yes para mensagens de aviso
-	function allow(){
-		var currentmsg = JSON.parse(localStorage.getItem("Msg"));
-		if (document.getElementById("ConfirmationMsg").style.display=="block"){
-			var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
-			document.getElementById("buttons_confirm").style.visibility = 'hidden';
-			document.getElementById("ShareLocation").style.display = "none";
-			document.getElementById("DeleleContact").style.display = "none";	
-			
-			if (currentmsg=="ShareLocation"){			//caso seja a mensagem de aviso de partilhar localização
-				lastscreens.pop();
-				document.getElementById("ConfirmationMsg").onclick= function(){opencontactscreen(currentcontact);};
-				var notification = {id:'', type:'Location-send', user:currentcontact};
-				var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
-				var numNotifications=Object.keys(notificationsData.notifications).length
-				notification.id=numNotifications;
-				notificationsData.notifications.push(notification);
-				loadNotifications(notificationsData);
-				document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> Your location is being shared with ' + currentcontact +'.</div>'; 		
-			}
-			if(currentmsg=="delelecontact"){				//caso seja a mensagem de eliminacao de contacto
-				var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
-				var num_contacts = contactsData.contacts.length;
-				var index_contact;
-				for(let i=0; i<num_contacts; i++){
-					if (contactsData.contacts[i].name==currentcontact)
-						index_contact=i;
-				};
-				contactsData.contacts.splice(index_contact,1);  
-				loadContacts(contactsData);
-				document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> You delete ' + currentcontact +'.</div>';
-				document.getElementById("ConfirmationMsg").onclick = function(){openScreen("ContactsMenu")};
-				backbutton();
-			}
-		}
-	}	
-
 	//botao no para mensagems de aviso
 	function deny(){
 		var lastscreen=lastscreens.pop();
@@ -379,7 +342,6 @@
 		notification.id=numNotifications;
 		notificationsData.notifications.push(notification);
 		loadNotifications(notificationsData);
-		document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> Your location is being shared with ' + currentcontact +'.</div>'; 	
 		backbutton();	
 	}
 
@@ -394,7 +356,6 @@
 		};
 		contactsData.contacts.splice(index_contact,1);  
 		loadContacts(contactsData);
-		document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> You delete ' + currentcontact +'.</div>';
 		backbutton();
 		backbutton();
 	}
@@ -682,9 +643,16 @@
 		ConcertScreen_updateStatus();
 	}
 
+	function total_price(){
+		total=0;
+		for(item of currentOrder)
+			total+=item.price;
+		return total;
+	}
+
 	function drawFoodStandsScreen(){
 		document.getElementById("StandsList").innerHTML = '';
-		document.getElementById("numItems1").innerHTML = currentOrder.length;
+		document.getElementById("numItems1").innerHTML = total_price()+"€";
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		for(i=0; i<foodstands.stands.length; i++){
 			stand=foodstands.stands[i];
@@ -698,7 +666,7 @@
 	}
 
 	function drawOrderTypeScreen(){
-		document.getElementById("numItems2").innerHTML = currentOrder.length;
+		document.getElementById("numItems2").innerHTML = total_price()+"€";
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		document.getElementById("OrderTypesList").innerHTML="";
@@ -715,7 +683,7 @@
 	}
 
 	function drawItemsScreen(){
-		document.getElementById("numItems3").innerHTML = currentOrder.length;
+		document.getElementById("numItems3").innerHTML = total_price()+"€";
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
@@ -728,12 +696,15 @@
 	}
 
 	function openFoodInfoScreen(itemIndex){
+		n_items=1;
 		localStorage.setItem("CurrentItem", JSON.stringify(itemIndex));
+		localStorage.setItem("n_items", n_items);
 		openScreen("AddItemScreen");
 	}
 
 	function drawAddItemScreen(){
-		document.getElementById("numItems4").innerHTML = currentOrder.length;
+		var n_items=JSON.parse(localStorage.getItem("n_items"));
+		document.getElementById("numItems4").innerHTML = total_price()+"€";
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
@@ -743,22 +714,46 @@
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemDescription">'+(item.description||"")+'</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemPrice">'+item.price+'€</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemTime"><img id="clock" src="icons/clock.png">:'+item.time+' min</div>';
+		document.getElementById("n_items").innerHTML+=n_items;
 	}
 
-	function addItem(){
+	function plusItem(){
+		var n_item=JSON.parse(localStorage.getItem("n_items"));
+		n_items++;
+		localStorage.setItem("n_items", n_items);
+		drawAddItemScreen();
+	}
+
+	function minusItem(){
+		var n_item=JSON.parse(localStorage.getItem("n_items"));
+		if(n_items>0)
+			n_items--;
+		localStorage.setItem("n_items", n_items);
+		drawAddItemScreen();
+	}
+
+	function checkItem(){
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));								
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
 		var typeindex = JSON.parse(localStorage.getItem("Currenttype"));
 		var itemindex = JSON.parse(localStorage.getItem("CurrentItem"));
+		var n_item=JSON.parse(localStorage.getItem("n_items"));
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
+		for(items of currentOrder){
+			if(items==item){
+				items.Xitems+=n_items;
+			}
+		}
 		currentOrder.push({
 			stand:foodstands.stands[standindex].name,
 			name:item.name,
 			price:item.price,
-			time:item.time
+			time:item.time,
+			Xitems:n_items
 		});
 		console.log(currentOrder);
-		backbutton();
+		localStorage.setItem("n_items", 1);
+		drawAddItemScreen();
 	}
 
 	function removeItem(i){
@@ -774,9 +769,9 @@
 		var total_time = 0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + '</div><div class="foodListItemPrice">'+item.price+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </div> </li>';
-			total_price+=item.price;
-			total_time+=item.time;
+			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </div> </li>';
+			total_price+=item.price*items.Xitems;
+			total_time+=item.time*item.Xitems;
 			i++;
 		}
 		document.getElementById("totalPrice").innerHTML = 'Total: ' + total_price + ' €';

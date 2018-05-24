@@ -33,9 +33,25 @@
 	height: 20px;
 }
 
-#addItemButton{
+#plusItemButton{
 	position: relative;
-	top: 5px;
+	top: 4px;
+	right: 5px;
+	width: 20px;
+	height: 20px;
+}
+
+#minusItemButton{
+	position: relative;
+	top: 4px;
+	right: 8px;
+	width: 20px;
+	height: 20px;
+}
+
+#checkItemButton{
+	position: relative;
+	top: 6px;
 	right: 0px;
 	width: 20px;
 	height: 20px;
