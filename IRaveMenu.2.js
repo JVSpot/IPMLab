@@ -742,8 +742,13 @@
 		var n_item=JSON.parse(localStorage.getItem("n_items"));
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
 		for(items of currentOrder)
-			if(items.name==item.name && items.stand==foodstands.stands[standindex].name)
+			if(items.name==item.name && items.stand==foodstands.stands[standindex].name){
 				items.Xitems+=n_items;
+				console.log(currentOrder);
+				localStorage.setItem("n_items", 1);
+				drawAddItemScreen();
+				return;
+			}
 		currentOrder.push({
 			stand:foodstands.stands[standindex].name,
 			name:item.name,
