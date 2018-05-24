@@ -646,7 +646,7 @@
 	function total_price(){
 		total=0;
 		for(item of currentOrder)
-			total+=item.price;
+			total+=item.price*item.Xitems;
 		return total;
 	}
 
@@ -683,6 +683,8 @@
 	}
 
 	function drawItemsScreen(){
+		n_items=1;
+		localStorage.setItem("n_items", n_items);
 		document.getElementById("numItems3").innerHTML = total_price()+"€";
 		var foodstands = JSON.parse(localStorage.getItem("FoodStands"));
 		var standindex = JSON.parse(localStorage.getItem("Currentstand"));
@@ -696,9 +698,7 @@
 	}
 
 	function openFoodInfoScreen(itemIndex){
-		n_items=1;
 		localStorage.setItem("CurrentItem", JSON.stringify(itemIndex));
-		localStorage.setItem("n_items", n_items);
 		openScreen("AddItemScreen");
 	}
 
@@ -714,7 +714,7 @@
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemDescription">'+(item.description||"")+'</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemPrice">'+item.price+'€</div>';
 		document.getElementById("ItemInfo").innerHTML += '<div class="itemTime"><img id="clock" src="icons/clock.png">:'+item.time+' min</div>';
-		document.getElementById("n_items").innerHTML+=n_items;
+		document.getElementById("n_items").innerHTML=n_items;
 	}
 
 	function plusItem(){
@@ -722,6 +722,7 @@
 		n_items++;
 		localStorage.setItem("n_items", n_items);
 		drawAddItemScreen();
+		console.log(n_items);
 	}
 
 	function minusItem(){
@@ -729,6 +730,7 @@
 		if(n_items>0)
 			n_items--;
 		localStorage.setItem("n_items", n_items);
+		console.log(n_items);
 		drawAddItemScreen();
 	}
 
@@ -739,11 +741,9 @@
 		var itemindex = JSON.parse(localStorage.getItem("CurrentItem"));
 		var n_item=JSON.parse(localStorage.getItem("n_items"));
 		item = foodstands.stands[standindex].item_types[typeindex].items[itemindex];
-		for(items of currentOrder){
-			if(items==item){
+		for(items of currentOrder)
+			if(items.name==item.name && items.stand==foodstands.stands[standindex].name)
 				items.Xitems+=n_items;
-			}
-		}
 		currentOrder.push({
 			stand:foodstands.stands[standindex].name,
 			name:item.name,
@@ -770,7 +770,7 @@
 		i=0;
 		for(item of currentOrder){
 			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </div> </li>';
-			total_price+=item.price*items.Xitems;
+			total_price+=item.price*item.Xitems;
 			total_time+=item.time*item.Xitems;
 			i++;
 		}
