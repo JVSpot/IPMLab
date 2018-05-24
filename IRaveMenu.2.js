@@ -59,55 +59,57 @@
 			setNotificationsNum()
 			drawMainMenu(menu1);
 		};	
-		if(screename=="NotificationsMenu"){
+		if(screename=="NotificationsMenu")
 			drawNotificationsList("NotificationsList2");
-		}
-		if(screename=="NotificationOptions"){
+		
+		if(screename=="NotificationOptions")
 			drawNotificationOptions();
-		}
-		if(screename=="ContactsMenu"){
+		
+		if(screename=="ContactsMenu")
 	    	drawContactsMenu();
-		};
-		if(screename=="ContactMenu"){
-			//loadContacts(contactsdata);
+
+		if(screename=="ContactMenu")
 			drawContactMenu();
-		};
-		if(screename=="ContactOption"){
+
+		if(screename=="ContactOption")
 			drawContactOption();
-		}
-		if(screename=="ScheduleMenuDays"){
+		
+		if(screename=="ScheduleMenuDays")
 			drawScheduleMenuDays();
-		}
-		if(screename=="ScheduleScreen"){
+		
+		if(screename=="ScheduleScreen")
 			drawScheduleScreen();
-		}
-		if(screename=="ConcertScreen"){
+
+		if(screename=="ConcertScreen")
 			drawConcertScreen();
-		}
-		if(screename=="ConcertNotificationTime"){
+		
+		if(screename=="ConcertNotificationTime")
 			drawConcertNotificationTime();
-		}
-		if(screename=="FoodStandsScreen"){
+		
+		if(screename=="FoodStandsScreen")
 			drawFoodStandsScreen();
-		}
-		if(screename=="OrderTypesScreen"){
+		
+		if(screename=="OrderTypesScreen")
 			drawOrderTypeScreen();
-		}
-		if(screename=="ItemsScreen"){
+		
+		if(screename=="ItemsScreen")
 			drawItemsScreen();
-		}
-		if(screename=="AddItemScreen"){
+		
+		if(screename=="AddItemScreen")
 			drawAddItemScreen();
-		}
-		if(screename=="ConcludeOrderScreen"){
+		
+		if(screename=="ConcludeOrderScreen")
 			drawConcludeOrderScreen();
-		}
-		if(screename=="MapMockView"){
+
+		if(screename=="OrderMessage")
+			drawOrderMessageScreen();
+		
+		if(screename=="MapMockView")
 			drawMapMockView();
-		}
-		if(screename=="SettingsView"){
+		
+		if(screename=="SettingsView")
 			drawSettingsView();
-		}
+		
 		showScreen(screename);
 	}
 
@@ -132,6 +134,7 @@
 		document.getElementById("ConcludeOrderScreen").style.display = "none";
 		document.getElementById("MapMockView").style.display = "none";
 		document.getElementById("SettingsView").style.display = "none";
+		document.getElementById("OrderMessage").style.display = "none";
 		document.getElementById(screename).style.display = "block";
 	}
 
@@ -376,8 +379,7 @@
 			}
 			if(notification.type=="FoodOrder-notification"){
 				document.getElementById(screen).innerHTML +=  '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')">FoodOrder.</li>';
-			}
-			
+			}	
 		}
 	}
 
@@ -758,11 +760,19 @@
 		});
 		console.log(currentOrder);
 		localStorage.setItem("n_items", 1);
-		drawAddItemScreen();
+		backbutton();
+	}
+
+	function removeTotalItem(i){
+		currentOrder.splice(i,1);
+		openScreen('ConcludeOrderScreen');
+		backbutton();
 	}
 
 	function removeItem(i){
-		currentOrder.splice(i,1);
+		currentOrder[i].Xitems--;
+		if((currentOrder[i].Xitems)==0)
+			removeTotalItem(i);
 		openScreen('ConcludeOrderScreen');
 		backbutton();
 	}
@@ -783,6 +793,10 @@
 		document.getElementById("totalTime").innerHTML = '<img id="clock" src="icons/clock.png">' + total_time + ' min';
 	}
 	
+	function drawOrderMessageScreen(){
+		document.getElementById("Yes_button").onclick=function(){cancelOrder()};
+		document.getElementById("buttons_confirm").style.visibility = 'visible';
+	}
 
 	function checkOrder(){
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
@@ -794,6 +808,12 @@
 		});
 		currentOrder=[];
 		loadNotifications(notificationsData);
+		backbutton();
+	}
+
+	function cancelOrder(){
+		currentOrder=[];
+		backbutton();
 		backbutton();
 	}
 	//others
