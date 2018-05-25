@@ -782,13 +782,18 @@
 		var total_time = 0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/trash-icon.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
+			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/minus_icon.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
 			total_price+=item.price*item.Xitems;
 			total_time+=item.time*item.Xitems;
 			i++;
 		}
 		document.getElementById("totalPrice").innerHTML = 'Total: ' + total_price + ' €';
 		document.getElementById("totalTime").innerHTML = '<img id="clock" src="icons/clock.png">' + total_time + ' min';
+		if (currentOrder.length > 0) {
+			document.getElementById("optsBtns").style.visibility = 'visible';
+		} else {
+			document.getElementById("optsBtns").style.visibility = 'hidden';
+		}
 	}
 	
 	function drawOrderMessageScreen(){
