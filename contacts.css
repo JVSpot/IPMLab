@@ -73,6 +73,9 @@
 }
 
 #ContactButtons {
+	position:relative;
+	left:5px;
+	top:5px;
 	padding: 0 5px 4px 1px;
 	cursor:pointer;
 }
@@ -100,9 +103,19 @@
 	border-width: 3;
 }
 
+#ContactOption{
+	max-height: 80px;
+	
+}
+
 #ConfirmationMsg{
 	text-align: center;
 	border-style: solid;
 	border-width: 3;
 	top:0px;
+}
+
+#ContactNumber{
+	position: relative;
+	left:2px;
 }
