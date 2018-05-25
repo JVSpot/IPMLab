@@ -780,7 +780,7 @@
 		var total_time = 0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/trash-icon.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
+			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/delete_one.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
 			total_price+=item.price*item.Xitems;
 			total_time+=item.time*item.Xitems;
 			i++;
