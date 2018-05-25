@@ -137,10 +137,11 @@ body {
 #Yes_button{
 	position: absolute;
 	top: 0px;
-	left:0px;
+	left:-5px;
 }
 
 #Yes_button > div {
+	border-radius: 4px;
 	width: 30px;
 	border: none;
 	color: white;
@@ -149,7 +150,6 @@ body {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 12px;
-	margin-top: 4px;
 	background-color: rgb(1, 153, 14); /* Green */
 }
 
@@ -160,6 +160,7 @@ body {
 }
 
 #NO_button > div {
+	border-radius: 4px;
 	width: 30px;
 	border: none;
 	color: white;
@@ -168,7 +169,6 @@ body {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 12px;
-	margin-top: 4px;
 	background-color: rgb(247, 9, 9); /* Red */
 }
 

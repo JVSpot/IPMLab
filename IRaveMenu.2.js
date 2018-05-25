@@ -534,10 +534,10 @@
 
 		document.getElementById("FriendsGoing").innerHTML = "" + currentSchedule.days[day].stages[stage].concerts[concert_index].going.length + " friends going";
 		if (currentSchedule.days[day].stages[stage].concerts[concert_index].notification) {
-			document.getElementById("AddConcertNotification").innerHTML = "Cancel Notify";
+			document.getElementById("AddConcertNotification").innerHTML = "Don't notify me";
 			document.getElementById("AddConcertNotification").style.backgroundColor = "#FF0000";
 		} else {
-			document.getElementById("AddConcertNotification").innerHTML = "Notify";
+			document.getElementById("AddConcertNotification").innerHTML = "Notify me";
 			document.getElementById("AddConcertNotification").style.backgroundColor = "#38a7d3";
 		}
 
