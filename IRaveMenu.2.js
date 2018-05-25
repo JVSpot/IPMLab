@@ -318,17 +318,17 @@
 		if(type=="ShareLocation"){
 			var notification = {id:Math.random(), type:'Location-send', user:currentcontact};
 			if (verifyNotification(notification)==false){
-				document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> Share location with ' + currentcontact +'?</div>';
+				document.getElementById("ConfirmationMsg").innerHTML +='<div > Share location with ' + currentcontact +'?</div>';
 				document.getElementById("Yes_button").onclick=function(){addLocationSendNotification()};
 			}
 			else{
 				id=verifyNotification(notification)
-				document.getElementById("ConfirmationMsg").innerHTML ='<div id="ConfirmationMsg"> Stop sharing your location with ' + currentcontact +'.</div>';
+				document.getElementById("ConfirmationMsg").innerHTML ='<div> Stop sharing your location with ' + currentcontact +'.</div>';
 				document.getElementById("Yes_button").onclick=function(){removeNotification(id)};
 			}
 		}
 		if(type=="delelecontact"){
-			document.getElementById("ConfirmationMsg").innerHTML +='<div id="ConfirmationMsg"> Delete ' + currentcontact +'?</div>';
+			document.getElementById("ConfirmationMsg").innerHTML +='<div > Delete ' + currentcontact +'?</div>';
 			document.getElementById("Yes_button").onclick=function(){deleteContact()};
 		}
 		document.getElementById("ConfirmationMsg").style.display = "block";
