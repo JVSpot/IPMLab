@@ -78,6 +78,8 @@
 	top:5px;
 	padding: 0 5px 4px 1px;
 	cursor:pointer;
+	max-height: 73px;
+	max-width: 97px;
 }
 
 #ContactButtons > div{
@@ -101,6 +103,13 @@
 	background-color: rgb(247, 9, 9); /* Red */
 	border-style: solid;
 	border-width: 3;
+}
+
+.DeleteContactIcon{
+	position: relative;
+	left: -14px;
+	width: 18px;
+	height: 18px;
 }
 
 #ContactOption{
