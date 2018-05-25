@@ -104,7 +104,7 @@
 .bagIcon{
     position:absolute;
     top:2px;
-    left:20px;
+    left:15px;
 	width: 18px;
 	height: 18px;
     
@@ -152,6 +152,8 @@
 }
 
 .itemPrice{
+	position: relative;
+	top :2px;
 	font-size: 14px;
 }
 
@@ -169,4 +171,11 @@
 	width: 18px;
 	height: 18px;
 
+}
+
+#removeItem{
+	position: relative;
+	top: 8px;
+	width: 20px;
+	height: 20px;
 }
