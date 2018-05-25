@@ -168,10 +168,6 @@
 		}	
 	}
 
-	//botao no para mensagems de aviso
-	function deny(){
-		backbutton();
-	}
 
 	//LockScreen
 	function getTime(){
