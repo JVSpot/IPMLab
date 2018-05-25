@@ -446,8 +446,9 @@
 	function removeNotification(notificationID){
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		for (let i=0; i < notificationsData.notifications.length ; i ++) {
-			if (notificationsData.notifications[i].id==notificationID){
+		var notificationID=JSON.parse(localStorage.getItem("Currentnotification"));
+		for(var notification of notificationsData.notifications){
+			if(notificationID==notification.id){
 				index_notification=i;
 				if(notificationsData.notifications[index_notification].type=="Concert-notification"){
 					var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
