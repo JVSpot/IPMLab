@@ -396,7 +396,7 @@
 					document.getElementById("Notification_button1").style.visibility = 'visible';
 					document.getElementById("NotificationInfo").innerHTML="You are sending your location to "+notification.user+".";
 					document.getElementById("Notification_button1").innerHTML="Stop sending location";
-					document.getElementById("Notification_button1").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("Notification_button1").onclick=function(){removeNotification(notificationID)};
 				}
 				if (notification.type=="Location-receive") {
 					document.getElementById("Notification_button1").style.visibility = 'visible';
@@ -405,7 +405,7 @@
 					document.getElementById("Notification_button1").innerHTML="See location on map";
 					document.getElementById("Notification_button1").onclick=function(){openScreen('MapMockView')};
 					document.getElementById("Notification_button2").innerHTML="Stop receiving location";
-					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notificationID)};
 				}
 				if (notification.type=="Concert-notification") {
 					localStorage.setItem("CurrentConcert", JSON.stringify([notification.concertDay, notification.concertStage, notification.concertIndex]));
@@ -419,7 +419,7 @@
 					document.getElementById("Notification_button1").innerHTML="Set Timer";
 					document.getElementById("Notification_button1").onclick=function(){openScreen("ConcertNotificationTime");};
 					document.getElementById("Notification_button2").innerHTML="Delete Notification";
-					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notificationID)};
 				}
 
 				if(notification.type=="FoodOrder-notification"){
@@ -437,13 +437,14 @@
 					document.getElementById("NotificationInfo").innerHTML+='<p>Total:'+total_price+' €</p>';
 					document.getElementById("Notification_button2").style.visibility = 'visible';
 					document.getElementById("Notification_button2").innerHTML="Delete notification";
-					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
+					document.getElementById("Notification_button2").onclick=function(){removeNotification(notificationID)};
 				}
 			}
 		}
 	}
 
 	function removeNotification(notificationID){
+		console.log(notificationID)
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 		for (let i=0; i < notificationsData.notifications.length ; i ++) {
