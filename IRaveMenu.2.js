@@ -111,6 +111,7 @@
 			drawSettingsView();
 		
 		showScreen(screename);
+		console.log(screename);
 	}
 
 	//abre o ecra em questao e fecha todos os outros
@@ -169,8 +170,7 @@
 
 	//botao no para mensagems de aviso
 	function deny(){
-		var lastscreen=lastscreens.pop();
-		openScreen(lastscreen);
+		backbutton();
 	}
 
 	//LockScreen
@@ -217,6 +217,7 @@
 			
 			if(notification.type=="Concert-notification")
 				document.getElementById("NotificationsList").innerHTML += '<li><marquee  class="notification" behavior="scroll" direction="left">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</marquee>' +' </li>';  
+			
 			if(notification.type=="FoodOrder-notification")
 				document.getElementById("NotificationsList").innerHTML +=  '<li><marquee  class="notification" behavior="scroll" direction="left">FoodOrder.</marquee>' +' </li>';  ;
 		}
@@ -423,16 +424,16 @@
 					document.getElementById("Notification_button1").onclick=function(){openScreen("ConcertNotificationTime");};
 					document.getElementById("Notification_button2").innerHTML="Delete Notification";
 					document.getElementById("Notification_button2").onclick=function(){removeNotification(notification.id)};
-
 				}
+
 				if(notification.type=="FoodOrder-notification"){
 					document.getElementById("NotificationInfo").innerHTML='<p>Your order:</p>';
 					var total_time=0;
 					var total_price=0;
 					for(item of notification.order){
-						document.getElementById("NotificationInfo").innerHTML+='<div class="NotificationInfo">'+item.stand+':'+item.name+' '+item.price+'€'+'</div>';
-						total_time+=item.time;
-						total_price+=item.price;
+						document.getElementById("NotificationInfo").innerHTML+='<div class="NotificationInfo">'+item.stand+':'+item.name+' x '+item.Xitems+" "+item.price*item.Xitems+'€'+'</div>';
+						total_time+=item.time*item.Xitems;
+						total_price+=item.price*item.Xitems;
 					}
 					console.log(total_time);
 					document.getElementById("NotificationInfo").innerHTML+='<p>Time of order:'+notification.orderTime+'</p>';
@@ -723,8 +724,8 @@
 		var n_item=JSON.parse(localStorage.getItem("n_items"));
 		n_items++;
 		localStorage.setItem("n_items", n_items);
-		drawAddItemScreen();
-		console.log(n_items);
+		openScreen("AddItemScreen");
+		backbutton();
 	}
 
 	function minusItem(){
@@ -732,8 +733,8 @@
 		if(n_items>0)
 			n_items--;
 		localStorage.setItem("n_items", n_items);
-		console.log(n_items);
-		drawAddItemScreen();
+		openScreen("AddItemScreen");
+		backbutton();
 	}
 
 	function checkItem(){
@@ -748,7 +749,7 @@
 				items.Xitems+=n_items;
 				console.log(currentOrder);
 				localStorage.setItem("n_items", 1);
-				drawAddItemScreen();
+				backbutton();
 				return;
 			}
 		currentOrder.push({
@@ -758,7 +759,6 @@
 			time:item.time,
 			Xitems:n_items
 		});
-		console.log(currentOrder);
 		localStorage.setItem("n_items", 1);
 		backbutton();
 	}
@@ -784,7 +784,7 @@
 		var total_time = 0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="deleteIcon" onclick="removeItem('+i+')" /> </div> </li>';
+			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/trash-icon.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
 			total_price+=item.price*item.Xitems;
 			total_time+=item.time*item.Xitems;
 			i++;
