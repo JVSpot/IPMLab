@@ -283,16 +283,16 @@
 		document.getElementById("buttons_confirm").style.visibility = 'hidden';
 		document.getElementById("ShareLocation").style.display = "block";
 		document.getElementById("DeleleContact").style.display = "block";
-		document.getElementById("DeleleContact").onclick=function(){opencontactoptioncreen('delelecontact')}
+		document.getElementById("DeleleContact").onclick=function(){opencontactoptionscreen('delelecontact')}
 		document.getElementById("ConfirmationMsg").onclick= null;
 		var notification = {id:Math.random(), type:'Location-send', user:currentcontact};
 		if(verifyNotification(notification)==false){
-			document.getElementById("ShareLocation").onclick=function(){opencontactoptioncreen('ShareLocation')}
+			document.getElementById("ShareLocation").onclick=function(){opencontactoptionscreen('ShareLocation')}
 			document.getElementById("ShareLocation").style.backgroundColor = "#00AA00";
 			document.getElementById("ShareLocation").innerHTML="Share location";
 		}
 		else{
-			document.getElementById("ShareLocation").onclick=function(){opencontactoptioncreen('ShareLocation')}
+			document.getElementById("ShareLocation").onclick=function(){opencontactoptionscreen('ShareLocation')}
 			document.getElementById("ShareLocation").style.backgroundColor = "#FF0000";
 			document.getElementById("ShareLocation").innerHTML="Stop sharing location";
 		}
@@ -304,7 +304,7 @@
 		}
 	}
 
-	function opencontactoptioncreen(type){
+	function opencontactoptionscreen(type){
 		localStorage.setItem("CurrentOption", JSON.stringify(type));
 		openScreen("ContactOption");
 	}
@@ -339,7 +339,7 @@
 		var notification = {id:Math.random, type:'Location-send', user:currentcontact};
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var numNotifications=Object.keys(notificationsData.notifications).length
-		notification.id=numNotifications;
+		notification.id=numNotifications+1;
 		notificationsData.notifications.push(notification);
 		loadNotifications(notificationsData);
 		backbutton();	
@@ -446,10 +446,10 @@
 	function removeNotification(notificationID){
 		var notificationsData = JSON.parse(localStorage.getItem("NotificationsData"));
 		var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
-		var notificationID=JSON.parse(localStorage.getItem("Currentnotification"));
-		for(var notification of notificationsData.notifications){
-			if(notificationID==notification.id){
+		for (let i=0; i < notificationsData.notifications.length ; i ++) {
+			if (notificationsData.notifications[i].id==notificationID){
 				index_notification=i;
+				console.log(index_notification);
 				if(notificationsData.notifications[index_notification].type=="Concert-notification"){
 					var currentSchedule = JSON.parse(localStorage.getItem("Schedule"));
 					currentSchedule.days[notificationsData.notifications[i].concertDay].stages[notificationsData.notifications[i].concertStage].concerts[notificationsData.notifications[i].concertIndex].notification = false;
@@ -781,7 +781,7 @@
 		var total_time = 0;
 		i=0;
 		for(item of currentOrder){
-			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/delete_one.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
+			document.getElementById("ItemsList").innerHTML += '<li id="item' + i + '" class="foodListItem"><div class="foodListItemTitle">' + item.name + " x " + item.Xitems + '</div><div class="foodListItemPrice">'+item.price*item.Xitems+'€ <img src="icons/trash-icon.png" class="selectable" id="removeTotalItem" onclick="removeTotalItem('+i+')" /> <img src="icons/trash-icon.png" class="selectable" id="removeItem" onclick="removeItem('+i+')" /></div> </li>';
 			total_price+=item.price*item.Xitems;
 			total_time+=item.time*item.Xitems;
 			i++;
