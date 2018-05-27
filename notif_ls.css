@@ -92,3 +92,8 @@
     padding:5px;
 }
 
+.notificationIcon{
+	height: 18px;
+	width: 18px;
+	float: left;
+}

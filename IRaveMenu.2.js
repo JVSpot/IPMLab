@@ -383,16 +383,16 @@
 		document.getElementById(screen).innerHTML ="";
 		for(var notification of notificationsData.notifications){
 			if (notification.type=="Location-receive"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="openNotificationScreen('+notification.id+')"><img class="notifcationIcon" src="icons/map.png">' + notification.user + ' is sharing his location with you.</li>';  
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id+ '" onclick="openNotificationScreen('+notification.id+')"><img class="notificationIcon" src="icons/map.png">' + notification.user + ' is sharing his location with you.</li>';  
 			}
 			if(notification.type=="Location-send"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notifcationIcon" src="icons/map.png">You are sharing you location with ' + notification.user +'.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notificationIcon" src="icons/map.png">You are sharing you location with ' + notification.user +'.</li>';
 			}
 			if(notification.type=="Concert-notification"){
-				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notifcationIcon" src="icons/schedule.png">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</li>';
+				document.getElementById(screen).innerHTML += '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notificationIcon" src="icons/schedule.png">Concert of ' + notification.artist + ' at ' + notification.concertTime + '.</li>';
 			}
 			if(notification.type=="FoodOrder-notification"){
-				document.getElementById(screen).innerHTML +=  '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notifcationIcon" src="icons/food.png">FoodOrder.</li>';
+				document.getElementById(screen).innerHTML +=  '<li class="selectable" class="notificationListed" id="not' + notification.id + '" onclick="openNotificationScreen('+notification.id+')"><img class="notificationIcon" src="icons/food.png">FoodOrder.</li>';
 			}	
 		}
 	}
