@@ -257,7 +257,7 @@
 		document.getElementById("ContactsName").innerHTML = "";
 		if(num_contacts != null){
 			for(let i=0; i<num_contacts; i++){
-				document.getElementById("ContactsName").innerHTML += '<li class="selectable" onclick="' +contactsData.contacts[i].onclick +'"> <div class="'+contactsData.contacts[i].class+ '" id="' + contactsData.contacts[i].name + '">'+ contactsData.contacts[i].name+'</div> </li>'; 
+				document.getElementById("ContactsName").innerHTML += '<li class="selectable" onclick="opencontactscreen('+i+')"> <div class="'+contactsData.contacts[i].class+ '" id="' + contactsData.contacts[i].name + '">'+ contactsData.contacts[i].name+'</div> </li>'; 
 			}
 		}
 		else{
@@ -277,6 +277,7 @@
 		var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
 		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
 		var num_contacts = contactsData.contacts.length;
+		console.log(currentcontact);
 		document.getElementById("ConfirmationMsg").innerHTML = "";
 		document.getElementById("ContactName").innerHTML = "";
 		document.getElementById("ContactNumber").innerHTML = "";
@@ -296,12 +297,8 @@
 			document.getElementById("ShareLocation").style.backgroundColor = "#FF0000";
 			document.getElementById("ShareLocation").innerHTML="Stop sharing location";
 		}
-		for(let i=0; i<num_contacts; i++){
-			if (contactsData.contacts[i].name==currentcontact){
-				document.getElementById("ContactName").innerHTML += '<div id="ContactName">' + contactsData.contacts[i].name + ' </div>'; 
-				document.getElementById("ContactNumber").innerHTML += '<div id="ContactNumber"> Number:'+contactsData.contacts[i].number+'</div>'; 
-			}
-		}
+		document.getElementById("ContactName").innerHTML += '<div id="ContactName">' + contactsData.contacts[currentcontact].name + ' </div>'; 
+		document.getElementById("ContactNumber").innerHTML += '<div id="ContactNumber"> Number:'+contactsData.contacts[currentcontact].number+'</div>'; 
 	}
 
 	function opencontactoptionscreen(type){
@@ -310,22 +307,23 @@
 	}
 
 	function drawContactOption(){
+		var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
 		var type = JSON.parse(localStorage.getItem("CurrentOption"));
 		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
 		if(type=="ShareLocation"){
 			var notification = {id:Math.random(), type:'Location-send', user:currentcontact};
 			if (verifyNotification(notification)==false){
-				document.getElementById("ConfirmationMsg").innerHTML +='<div > Share location with ' + currentcontact +'?</div>';
+				document.getElementById("ConfirmationMsg").innerHTML +='<div > Share location with ' + contactsData.contacts[currentcontact].name +'?</div>';
 				document.getElementById("Yes_button").onclick=function(){addLocationSendNotification()};
 			}
 			else{
 				id=verifyNotification(notification)
-				document.getElementById("ConfirmationMsg").innerHTML ='<div> Stop sharing your location with ' + currentcontact +'.</div>';
+				document.getElementById("ConfirmationMsg").innerHTML ='<div> Stop sharing your location with ' + contactsData.contacts[currentcontact].name +'.</div>';
 				document.getElementById("Yes_button").onclick=function(){removeNotification(id)};
 			}
 		}
 		if(type=="delelecontact"){
-			document.getElementById("ConfirmationMsg").innerHTML +='<div > Delete ' + currentcontact +'?</div>';
+			document.getElementById("ConfirmationMsg").innerHTML +='<div > Delete ' + contactsData.contacts[currentcontact].name +'?</div>';
 			document.getElementById("Yes_button").onclick=function(){deleteContact()};
 		}
 		document.getElementById("ConfirmationMsg").style.display = "block";
@@ -348,16 +346,13 @@
 	function deleteContact(){
 		var currentcontact = JSON.parse(localStorage.getItem("CurrentContact"));
 		var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
-		var num_contacts = contactsData.contacts.length;
-		var index_contact;
-		for(let i=0; i<num_contacts; i++){
-			if (contactsData.contacts[i].name==currentcontact)
-				index_contact=i;
-		};
-		contactsData.contacts.splice(index_contact,1);  
+		contactsData.contacts.splice(currentcontact,1);  
 		loadContacts(contactsData);
-		backbutton();
-		backbutton();
+		lastscreens.pop();
+		lastscreens.pop();
+		lastscreens.pop();
+		openScreen('ContactsMenu');
+		document.getElementById("buttons_confirm").style.visibility = 'hidden';	
 	}
 
 	function createContact(){
@@ -367,8 +362,7 @@
 		contactsData.contacts.push({
 			name:name,
 			class:"Contact",
-			number:number, 
-			onclick:opencontactscreen(name)
+			number:number
 		});
 		loadContacts(contactsData);
 	}
