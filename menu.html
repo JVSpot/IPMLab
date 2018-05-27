@@ -2,7 +2,6 @@
 
 <head>
 	<title>Prototipo IRave</title>
-	<!--<link rel="stylesheet" href="IRave.css">-->
 	<meta charset="UTF-8" />
 	<script src="IRaveMenu.2.js"></script>
     <script src="IRaveContactsList.js"></script>
@@ -152,7 +151,7 @@
 				<div id="optsBtns">
 					<div>&nbsp;Check order&nbsp;<img src="icons\check-mark.png" class="selectable" id="checkOrderButton" onclick="checkOrder()"></div>	
 
-					<div>Cancel order<img src="icons\delete_order.png" class="selectable" id="cancelOrderButton" onclick="openScreen('OrderMessage')"></div>
+					<div>Cancel order<img src="icons\trash-icon.png" class="selectable" id="cancelOrderButton" onclick="openScreen('OrderMessage')"></div>
 				</div>	
 			</div>
 			<div id="OrderMessage" style="display: none">
@@ -185,5 +184,9 @@
         </div>
         <!--                -->
 	</div>
+	<div id=addContactGenerator>
+		<input type="text" id="CGName" value="Name">
+		<input type="text" id="CGNumber" value="Phone number">
+		<button id="CGButton" onclick="createContact()">Add contact</button>
 </body>
 </html>

@@ -359,6 +359,23 @@
 		backbutton();
 		backbutton();
 	}
+
+	function createContact(){
+		var contactsData = JSON.parse(localStorage.getItem("AllContactsData"));
+		var name = document.getElementById("CGName").value;
+		var number = document.getElementById("CGNumber").value;
+		contactsData.contacts.push({
+			name:name,
+			class:"Contact",
+			number:number, 
+			onclick:opencontactscreen(name)
+		});
+		loadContacts(contactsData);
+	}
+
+
+
+	
 	//notifications
 
 	function drawNotificationsList(screen){
